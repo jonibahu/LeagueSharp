@@ -58,6 +58,8 @@ namespace Tristana
             Q.Range = 541 + 9 * (Player.Level - 1);
             E.Range = 541 + 9 * (Player.Level - 1);
             R.Range = 541 + 9 * (Player.Level - 1);
+            CheckForExecute();
+            
         }
 
         private static void Orbwalking_BeforeAttack(Orbwalking.BeforeAttackEventArgs args)
@@ -67,8 +69,15 @@ namespace Tristana
         private static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
         {
             
-            foreach(var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(enemy => enemy.IsValidTarget(R.Range))){
-                if(R.IsReady() && DamageLib.IsKillable(enemy, new [] {DamageLib.SpellType.R})){
+            
+        }
+
+        private static void CheckForExecute()
+        {
+            foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(enemy => enemy.IsValidTarget(R.Range)))
+            {
+                if (R.IsReady() && DamageLib.IsKillable(enemy, new[] { DamageLib.SpellType.R }))
+                {
                     R.CastOnUnit(enemy);
                 }
             }
