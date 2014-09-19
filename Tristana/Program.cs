@@ -41,7 +41,10 @@ namespace Tristana
             Orbwalker = new Orbwalking.Orbwalker(Config.SubMenu("Orbwalking"));
 
             Config.AddSubMenu(new Menu("Combo", "Combo"));
-
+            Config.SubMenu("Combo").AddItem(new MenuItem("UseQCombo", "Use Q").SetValue(true));
+            Config.SubMenu("Combo").AddItem(new MenuItem("UseECombo", "Use E").SetValue(true));
+            Config.SubMenu("Combo").AddItem(new MenuItem("UseRCombo", "Use R").SetValue(true));
+            Config.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
 
             Game.OnGameUpdate += Game_OnGameUpdate;
             Orbwalking.AfterAttack += Orbwalking_AfterAttack;
@@ -58,8 +61,10 @@ namespace Tristana
             Q.Range = 541 + 9 * (Player.Level - 1);
             E.Range = 541 + 9 * (Player.Level - 1);
             R.Range = 541 + 9 * (Player.Level - 1);
-            CheckForExecute();
-            
+            if (Config.Item("ComboActive").GetValue<KeyBind>().Active)
+            {
+                Combo();
+            }
         }
 
         private static void Orbwalking_BeforeAttack(Orbwalking.BeforeAttackEventArgs args)
@@ -68,8 +73,8 @@ namespace Tristana
 
         private static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
         {
-            
-            
+
+
         }
 
         private static void CheckForExecute()
@@ -79,6 +84,30 @@ namespace Tristana
                 if (R.IsReady() && DamageLib.IsKillable(enemy, new[] { DamageLib.SpellType.R }))
                 {
                     R.CastOnUnit(enemy);
+                }
+            }
+        }
+
+        private static void Combo()
+        {
+            var useQ = Config.Item("UseQCombo").GetValue<bool>();
+            var useE = Config.Item("UseECombo").GetValue<bool>();
+            var useR = Config.Item("UseRCombo").GetValue<bool>();
+            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
+            if (target == null)
+            {
+                return;
+            }
+            else
+            {
+                if (useQ) { Q.Cast(); }
+                if (useE) { E.Cast(target); }
+                if (useR)
+                {
+                    if (DamageLib.IsKillable(target, new[] { DamageLib.SpellType.R }))
+                    {
+                        R.CastOnUnit(target);
+                    }
                 }
             }
         }
