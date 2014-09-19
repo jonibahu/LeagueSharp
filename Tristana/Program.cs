@@ -56,7 +56,6 @@ namespace Tristana
             Q.Range = 541 + 9 * (Player.Level - 1);
             E.Range = 541 + 9 * (Player.Level - 1);
             R.Range = 541 + 9 * (Player.Level - 1);
-            Console.WriteLine(Q.Range.ToString());
         }
 
         private static void Orbwalking_BeforeAttack(Orbwalking.BeforeAttackEventArgs args)
