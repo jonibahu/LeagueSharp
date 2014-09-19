@@ -32,12 +32,10 @@ namespace Tristana
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
-            if (Player.Level > 1)
-            {
-                Q.Range = 541 + 9 * (Player.Level - 1);
-                E.Range = 541 + 9 * (Player.Level - 1);
-                R.Range = 541 + 9 * (Player.Level - 1);
-            }
+            Q.Range = 541 + 9 * (Player.Level - 1);
+            E.Range = 541 + 9 * (Player.Level - 1);
+            R.Range = 541 + 9 * (Player.Level - 1);
+            Console.WriteLine(args.ToString());
         }
     }
 }
