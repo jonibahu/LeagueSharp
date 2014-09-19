@@ -17,7 +17,7 @@ namespace Tristana
         public static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
-
+            Game.OnGameUpdate += Game_OnGameUpdate;
         }
 
         private static void Game_OnGameLoad(EventArgs args)
@@ -28,6 +28,8 @@ namespace Tristana
             W = new Spell(SpellSlot.W, 900);
             E = new Spell(SpellSlot.E, 550);
             R = new Spell(SpellSlot.R, 550);
+            Game.OnGameUpdate += Game_OnGameUpdate;
+            Game.PrintChat(ChampionName + " Loaded!");
         }
 
         private static void Game_OnGameUpdate(EventArgs args)
