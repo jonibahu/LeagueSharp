@@ -41,10 +41,11 @@ namespace Tristana
 
             Config.AddSubMenu(new Menu("Combo", "Combo"));
 
-
+            
             Game.OnGameUpdate += Game_OnGameUpdate;
             Orbwalking.AfterAttack += Orbwalking_AfterAttack;
             Orbwalking.BeforeAttack += Orbwalking_BeforeAttack;
+            Config.AddToMainMenu();
             Game.PrintChat("'Rocket Girl Tristana' Loaded!");
             
         }
