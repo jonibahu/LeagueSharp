@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using LeagueSharp;
 using SharpDX;
 using LeagueSharp.Common;
@@ -41,16 +42,16 @@ namespace Tristana
 
             Config.AddSubMenu(new Menu("Combo", "Combo"));
 
-            
+
             Game.OnGameUpdate += Game_OnGameUpdate;
             Orbwalking.AfterAttack += Orbwalking_AfterAttack;
             Orbwalking.BeforeAttack += Orbwalking_BeforeAttack;
             Config.AddToMainMenu();
             Game.PrintChat("'Rocket Girl Tristana' Loaded!");
-            
+
         }
 
-        
+
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
@@ -65,6 +66,12 @@ namespace Tristana
 
         private static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
         {
+            
+            foreach(var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(enemy => enemy.IsValidTarget(R.Range)){
+                if(R.IsReady() && DamageLib.IsKillable(enemy, new [] {DamageLib.SpellType.R})){
+                    R.CastOnUnit(enemy);
+                }
+            }
         }
 
 
