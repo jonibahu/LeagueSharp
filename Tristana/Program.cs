@@ -37,7 +37,7 @@ namespace Tristana
             Q.Range = 541 + 9 * (Player.Level - 1);
             E.Range = 541 + 9 * (Player.Level - 1);
             R.Range = 541 + 9 * (Player.Level - 1);
-            Console.WriteLine(args.ToString());
+            Console.WriteLine(Q.Range.ToString());
         }
     }
 }
