@@ -46,12 +46,33 @@ namespace Tristana
             Config.SubMenu("Combo").AddItem(new MenuItem("UseRCombo", "Use R").SetValue(true));
             Config.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
 
+            Config.AddSubMenu(new Menu("Harass", "Harass"));
+            Config.SubMenu("Harass").AddItem(new MenuItem("UseEHarass", "Use E").SetValue(true));
+            Config.SubMenu("Harass").AddItem(new MenuItem("HarassActive", "Harass").SetValue(new KeyBind(67, KeyBindType.Press)));
+
+            Config.AddSubMenu(new Menu("Misc", "Misc"));
+            Config.SubMenu("Misc").AddItem(new MenuItem("UseAntiGapcloser", "R on Gapclose").SetValue(true));
+
+            AntiGapcloser.OnEnemyGapcloser += OnEnemyGapcloser;
+
             Game.OnGameUpdate += Game_OnGameUpdate;
             Orbwalking.AfterAttack += Orbwalking_AfterAttack;
             Orbwalking.BeforeAttack += Orbwalking_BeforeAttack;
             Config.AddToMainMenu();
             Game.PrintChat("'Rocket Girl Tristana' Loaded!");
 
+        }
+
+        private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
+        {
+            var sender = gapcloser.Sender;
+            if (Config.Item("UseAntiGapcloser").GetValue<bool>() == true)
+            {
+                if (sender.IsValidTarget(R.Range))
+                {
+                    R.CastOnUnit(sender);
+                }
+            }
         }
 
 
@@ -65,6 +86,24 @@ namespace Tristana
             {
                 Combo();
             }
+            if (Config.Item("HarassActive").GetValue<KeyBind>().Active)
+            {
+                Harass();
+            }
+        }
+
+        private static void Harass()
+        {
+            var useE = Config.Item("UseEHarass").GetValue<bool>();
+            var target = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Physical);
+            if (target == null)
+            {
+                return;
+            }
+            else
+            {
+                if (useE && E.IsReady()) { E.Cast(target); }
+            }
         }
 
         private static void Orbwalking_BeforeAttack(Orbwalking.BeforeAttackEventArgs args)
@@ -73,8 +112,6 @@ namespace Tristana
 
         private static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
         {
-
-
         }
 
         private static void CheckForExecute()
@@ -100,9 +137,9 @@ namespace Tristana
             }
             else
             {
-                if (useQ) { Q.Cast(); }
-                if (useE) { E.Cast(target); }
-                if (useR)
+                if (useQ && Q.IsReady()) { Q.Cast(); }
+                if (useE && E.IsReady()) { E.Cast(target); }
+                if (useR && R.IsReady())
                 {
                     if (DamageLib.IsKillable(target, new[] { DamageLib.SpellType.R }))
                     {
@@ -111,7 +148,5 @@ namespace Tristana
                 }
             }
         }
-
-
     }
 }
