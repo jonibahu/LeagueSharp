@@ -42,6 +42,7 @@ namespace Gragas
 
             Config.AddSubMenu(new Menu("Combo", "Combo"));
             Config.SubMenu("Combo").AddItem(new MenuItem("UseQCombo", "Use Q").SetValue(true));
+            Config.SubMenu("Combo").AddItem(new MenuItem("UseWCombo", "Use W").SetValue(true));
             Config.SubMenu("Combo").AddItem(new MenuItem("UseECombo", "Use E").SetValue(true));
             Config.SubMenu("Combo").AddItem(new MenuItem("UseRCombo", "Use R").SetValue(true));
             Config.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
@@ -80,6 +81,25 @@ namespace Gragas
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
         {
             //throw new NotImplementedException();
+        }
+
+        private static void Combo()
+        {
+            var useQ = Config.Item("UseQCombo").GetValue<bool>();
+            var useW = Config.Item("UseWCombo").GetValue<bool>();
+            var useE = Config.Item("UseECombo").GetValue<bool>();
+            var useR = Config.Item("UseRCombo").GetValue<bool>();
+            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            if (target == null)
+            {
+                return;
+            }
+            else
+            {
+                if(useQ && target.IsValidTarget(Q.Range) && Q.IsReady()){
+                    Q.Cast(target, true);
+                }
+            }
         }
     }
 }
