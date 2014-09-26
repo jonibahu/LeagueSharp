@@ -1,1 +1,2 @@
 C:\Users\Alrik\Documents\GitHub\LeagueSharp\Gragas\bin\Debug\Gragas.exe.config
+C:\Users\Alrik\Documents\GitHub\LeagueSharp\Gragas\bin\Debug\Tristana.exe.config
