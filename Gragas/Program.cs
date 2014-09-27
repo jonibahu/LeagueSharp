@@ -97,6 +97,7 @@ namespace Gragas
             }
             else
             {
+                Game.PrintChat("Q is Ready.");
                 if(useQ && target.IsValidTarget(Q.Range) && Q.IsReady()){
                     Game.PrintChat("Q is Ready.");
                 }
