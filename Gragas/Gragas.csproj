@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6BA7D0C3-8AC6-48C3-AA06-A0171C177CD5}</ProjectGuid>
+    <ProjectGuid>{E1221489-8F93-44D2-A332-46BD4621E25E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gragas</RootNamespace>
