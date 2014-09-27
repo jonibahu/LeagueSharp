@@ -106,7 +106,7 @@ namespace Gragas
             {
                 Game.PrintChat("Q is Ready.");
                 if(useQ && target.IsValidTarget(Q.Range) && Q.IsReady()){
-                    Game.PrintChat("Q is Ready.");
+                    Q.Cast(Prediction.GetPrediction(target, 0).CastPosition);
                 }
             }
         }
