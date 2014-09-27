@@ -76,7 +76,14 @@ namespace Gragas
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
-            //throw new NotImplementedException();
+            if (Config.Item("ComboActive").GetValue<KeyBind>().Active)
+            {
+                Combo();
+            }
+            if (Config.Item("HarassActive").GetValue<KeyBind>().Active)
+            {
+                //Harass();
+            }
         }
 
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
