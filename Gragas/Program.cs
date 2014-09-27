@@ -104,9 +104,17 @@ namespace Gragas
             }
             else
             {
-                Game.PrintChat("Q is Ready.");
+                bool barrelRoll = Player.HasBuff("Barrel Roll");
                 if(useQ && target.IsValidTarget(Q.Range) && Q.IsReady()){
-                    Q.Cast(Prediction.GetPrediction(target, 0).CastPosition);
+                    SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
+                    if(!barrelRoll){
+                        Q.Cast(predPos);
+                    }
+                    if (barrelRoll)
+                    {
+                        Q.CastIfWillHit(target, 1);
+                    }
+                    
                 }
             }
         }
