@@ -26,7 +26,6 @@ namespace Gragas
             if (Player.BaseSkinName != ChampionName) return;
             Game.PrintChat("Loading 'Roll Out The Barrel'...");
             Q = new Spell(SpellSlot.Q, 850);
-            Q.SetSkillshot(0.6f, 100, float.MaxValue, false, SkillshotType.SkillshotCircle);
 
             W = new Spell(SpellSlot.W, 0);
             E = new Spell(SpellSlot.E, 600);
