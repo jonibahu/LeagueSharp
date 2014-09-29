@@ -140,6 +140,13 @@ namespace Gragas
                     SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
                     E.Cast(predPos);
                 }
+                if (useR && R.IsReady())
+                {
+                    if (Damage.IsKillable(Player, target, new Tuple<SpellSlot, int> [] { Tuple.Create(SpellSlot.R, 50) } ))
+                    {
+                        R.CastIfWillHit(target, 1);
+                    }
+                }
             }
         }
     }
