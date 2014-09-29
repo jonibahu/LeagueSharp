@@ -135,6 +135,11 @@ namespace Gragas
                 {
                     W.Cast();
                 }
+                if (useE && E.IsReady())
+                {
+                    SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
+                    E.Cast(predPos);
+                }
             }
         }
     }
