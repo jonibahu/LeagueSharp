@@ -237,7 +237,7 @@ namespace Gragas
                 bool barrelRoll = ObjectManager.Player.HasBuff("GragasQ");
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
-                    SharpDX.Vector3 predPos = Prediction.GetPrediction(qTarget, 50).CastPosition;
+                    SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
                     if (!barrelRoll)
                     {
                         Q.Cast(predPos);
