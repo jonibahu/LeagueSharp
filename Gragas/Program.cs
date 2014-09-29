@@ -234,8 +234,7 @@ namespace Gragas
             }
             else
             {
-                bool barrelRoll = Player.HasBuff("GragasQ");
-                Game.PrintChat(barrelRoll.ToString());
+                bool barrelRoll = ObjectManager.Player.HasBuff("GragasQ");
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Prediction.GetPrediction(qTarget, 50).CastPosition;
