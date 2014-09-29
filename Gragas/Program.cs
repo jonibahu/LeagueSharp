@@ -153,7 +153,9 @@ namespace Gragas
                     if (useR && R.IsReady() &&
                         ObjectManager.Player.GetSpellDamage(target, SpellSlot.R) > target.Health)
                     {
-                        R.Cast(target, true, true);
+                        PredictionOutput prediction;
+                        prediction = R.GetPrediction(target, true);
+                        R.Cast(prediction.CastPosition);
                     }
                 }
             }
