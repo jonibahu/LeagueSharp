@@ -156,7 +156,11 @@ namespace Gragas
             var useW = Config.Item("UseWCombo").GetValue<bool>();
             var useE = Config.Item("UseECombo").GetValue<bool>();
             var useR = Config.Item("UseRCombo").GetValue<bool>();
+
             var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+
+            Game.PrintChat(Player.GetSpellDamage(target, "Explosive Cask").ToString());
+
             if (target == null)
             {
                 return;
