@@ -232,35 +232,25 @@ namespace Gragas
             else
             {
                 bool barrelRoll = Player.HasBuff("Barrel Roll");
+                float time = Game.Time;
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Prediction.GetPrediction(qTarget, 50).CastPosition;
                     if (!barrelRoll)
                     {
                         Q.Cast(predPos);
+                        time = Game.Time;
                         Game.PrintChat("PreCasted Q.");
                     }
                     if (barrelRoll)
                     {
-                        foreach (BuffInstance bi in Player.Buffs)
+                        if (Game.Time - time < 2)
                         {
-                            if (bi.DisplayName == "Barrel Roll")
-                            {
-                                float et = bi.EndTime;
-                                float st = bi.StartTime;
-                                float gt = Game.Time;
-                                float timeLeft = et - gt;
-                                float buffTime = et - st;
-                                Game.PrintChat("Time left in buff: " + timeLeft.ToString());
-                                if (timeLeft < 2.5)
-                                {
-                                    Q.CastIfWillHit(qTarget, 1);
-                                    Game.PrintChat("ReCasted Q for 1.");
-                                }
-                                Q.CastIfWillHit(qTarget, 3);
-                                Game.PrintChat("ReCasted Q for 3.");
-                            }
+                            Q.CastIfWillHit(qTarget, 1);
+                            Game.PrintChat("ReCasted Q for 1.");
                         }
+                        Q.CastIfWillHit(qTarget, 3);
+                        Game.PrintChat("ReCasted Q for 3.");
                     }
 
                 }
@@ -272,7 +262,8 @@ namespace Gragas
                 if (useE && eTarget.IsValidTarget(E.Range) && E.IsReady())
                 {
                     PredictionOutput po = E.GetPrediction(eTarget, true);
-                    if(po.Hitchance >= HitChance.Low){
+                    if (po.Hitchance >= HitChance.Low)
+                    {
                         E.Cast(po.CastPosition, true);
                         Game.PrintChat("Casted E.");
                     }
