@@ -110,9 +110,15 @@ namespace Gragas
             var useW = Config.Item("UseWLaneClear").GetValue<bool>();
             var useE = Config.Item("UseELaneClear").GetValue<bool>();
             var useR = Config.Item("UseRLaneClear").GetValue<bool>();
-            Game.PrintChat("" + Q.Width);
+
             var rangedMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range, MinionTypes.Ranged);
             var allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
+
+            var jungleMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range, MinionTypes.All, MinionTeam.Neutral);
+            foreach (var minion in jungleMinions)
+            {
+                allMinions.Add(minion);
+            }
             if (useQ && Q.IsReady())
             {
                 bool barrelRoll = Player.HasBuff("Barrel Roll");
