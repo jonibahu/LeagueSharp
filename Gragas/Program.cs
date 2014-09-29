@@ -240,6 +240,7 @@ namespace Gragas
                     {
                         Q.Cast(predPos);
                         time = Game.Time;
+                        Game.PrintChat(time.ToString());
                         Game.PrintChat("PreCasted Q.");
                     }
                     if (barrelRoll)
