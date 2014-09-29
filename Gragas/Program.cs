@@ -232,6 +232,7 @@ namespace Gragas
             else
             {
                 bool barrelRoll = Player.HasBuff("Barrel Roll");
+                Game.PrintChat(barrelRoll.ToString());
                 float time = Game.Time;
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
