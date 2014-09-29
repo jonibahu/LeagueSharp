@@ -244,7 +244,7 @@ namespace Gragas
                     }
                     if (barrelRoll)
                     {
-                        ;
+                        
                         if (getRemainingBarrelRoll() < 2)
                         {
                             Q.CastIfWillHit(qTarget, 1);
