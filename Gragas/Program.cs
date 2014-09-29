@@ -103,9 +103,14 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
+            
 
-            var buff = ObjectManager.Player.HasBuff("Barrel Roll");
-            Game.PrintChat("Player has Barrel Roll: " + buff.ToString());
+            var buffs = ObjectManager.Player.Buffs;
+            foreach (var buff in buffs)
+            {
+                Game.PrintChat("Player has Barrel Roll: " + buff.ToString());
+            }
+            //Game.PrintChat("Player has Barrel Roll: " + buff.ToString());
         }
 
         private static void Harass()
