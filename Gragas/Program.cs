@@ -142,7 +142,7 @@ namespace Gragas
                 }
                 if (useR && R.IsReady())
                 {
-                    if (Damage.IsKillable(Player, target, new Tuple<SpellSlot, int> [] { Tuple.Create(SpellSlot.R, 50) } ))
+                    if (Damage.IsKillable(Player, target, new Tuple<SpellSlot, int> [] { Tuple.Create(SpellSlot.R, 1) } ))
                     {
                         R.CastIfWillHit(target, 1);
                     }
