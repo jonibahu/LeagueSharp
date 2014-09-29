@@ -286,6 +286,7 @@ namespace Gragas
             {
                 if (buff.Name == "GragasQ")
                 {
+                    Game.PrintChat("Remaining Barrel Roll Time: " + (buff.EndTime - Game.Time).ToString());
                     return buff.EndTime - Game.Time;
                 }
             }
