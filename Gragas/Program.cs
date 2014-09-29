@@ -212,7 +212,7 @@ namespace Gragas
                 if (useR && R.IsReady())
                 {
                     //Game.PrintChat("R is Ready.");
-                    if (Player.GetSpellDamage(target, "Explosive Cask") > target.Health)
+                    if (DamageLib.IsKillable(target, new[] {DamageLib.SpellType.R}))
                     {
                         Game.PrintChat("R can kill target...");
                         PredictionOutput prediction;
