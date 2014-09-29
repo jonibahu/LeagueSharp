@@ -96,7 +96,7 @@ namespace Gragas
             if (Program.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.LaneClear)
             {
                 Game.PrintChat("laneclear");
-                //LaneClear();
+                LaneClear();
             }
         }
 
