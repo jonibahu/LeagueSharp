@@ -178,6 +178,7 @@ namespace Gragas
             {
                 bool barrelRoll = Player.HasBuff("Barrel Roll");
                 if(useQ && target.IsValidTarget(Q.Range) && Q.IsReady()){
+                    Game.PrintChat("Q is Valid!");
                     SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
                     if(!barrelRoll){
                         Q.Cast(predPos);
@@ -209,14 +210,10 @@ namespace Gragas
                 }
                 if (useE && target.IsValidTarget(E.Range) && E.IsReady())
                 {
-                    PredictionOutput prediction;
-                    if (ObjectManager.Player.Distance(target) < E.Range)
+                    PredictionOutput po = E.GetPrediction(target);
+                    if (po.Hitchance >= HitChance.Medium && Player.Distance(po.CastPosition) < 600)
                     {
-                        prediction = E.GetPrediction(target, true);
-                        if (prediction.Hitchance >= HitChance.Medium)
-                        {
-                            E.Cast(prediction.CastPosition);
-                        }
+                        E.Cast(po.CastPosition);
                     }
                 }
                 if (useR && R.IsReady())
