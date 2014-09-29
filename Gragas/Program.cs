@@ -265,9 +265,9 @@ namespace Gragas
                 {
                     W.Cast();
                 }
-                if (useE && target.IsValidTarget(E.Range) && E.IsReady())
+                if (useE && eTarget.IsValidTarget(E.Range) && E.IsReady())
                 {
-                    PredictionOutput po = E.GetPrediction(target, true);
+                    PredictionOutput po = E.GetPrediction(eTarget, true);
                     if(po.Hitchance >= HitChance.Low){
                         E.Cast(po.CastPosition, true);
                     }
@@ -275,10 +275,10 @@ namespace Gragas
                 if (useR && R.IsReady())
                 {
                     //Game.PrintChat("R is Ready.");
-                    if (DamageLib.IsKillable(target, new[] { DamageLib.SpellType.R }))
+                    if (DamageLib.IsKillable(rTarget, new[] { DamageLib.SpellType.R }))
                     {
                         PredictionOutput prediction;
-                        prediction = R.GetPrediction(target, true);
+                        prediction = R.GetPrediction(rTarget, true);
                         R.Cast(prediction.CastPosition);
                     }
                 }
