@@ -159,7 +159,7 @@ namespace Gragas
 
             var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             
-            Game.PrintChat(Damage.GetComboDamage(Player, target, new SpellSlot [] { SpellSlot.Q }).ToString());
+            Game.PrintChat(Damage.GetComboDamage(Player, target, new SpellSlot [] { SpellSlot.R }).ToString());
 
             if (target == null)
             {
