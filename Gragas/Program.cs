@@ -161,7 +161,8 @@ namespace Gragas
             var rangedMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range, MinionTypes.Ranged);
             var allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
 
-            var jungleMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range, MinionTypes.All, MinionTeam.Neutral);
+            var jungleMinions = MinionManager.GetMinions(ObjectManager.Player.Position, Q.Range, MinionTypes.All, MinionTeam.NotAlly);
+
             foreach (var minion in jungleMinions)
             {
                 allMinions.Add(minion);
