@@ -240,26 +240,22 @@ namespace Gragas
                     {
                         Q.Cast(predPos);
                         time = Game.Time;
-                        Game.PrintChat(time.ToString());
-                        Game.PrintChat("PreCasted Q.");
+                        //Game.PrintChat(time.ToString());
                     }
                     if (barrelRoll)
                     {
-                        Game.PrintChat((Game.Time - time).ToString());
+                        Game.PrintChat("GameTime - time " + (Game.Time - time).ToString());
                         if (Game.Time - time < 2)
                         {
                             Q.CastIfWillHit(qTarget, 1);
-                            Game.PrintChat("ReCasted Q for 1.");
                         }
                         Q.CastIfWillHit(qTarget, 3);
-                        Game.PrintChat("ReCasted Q for 3.");
                     }
 
                 }
                 if (useW && W.IsReady())
                 {
                     W.Cast();
-                    Game.PrintChat("Casted W.");
                 }
                 if (useE && eTarget.IsValidTarget(E.Range) && E.IsReady())
                 {
@@ -267,7 +263,6 @@ namespace Gragas
                     if (po.Hitchance >= HitChance.Low)
                     {
                         E.Cast(po.CastPosition, true);
-                        Game.PrintChat("Casted E.");
                     }
                 }
                 if (useR && R.IsReady())
@@ -278,7 +273,6 @@ namespace Gragas
                         PredictionOutput prediction;
                         prediction = R.GetPrediction(rTarget, true);
                         R.Cast(prediction.CastPosition);
-                        Game.PrintChat("Casted R.");
                     }
                 }
             }
