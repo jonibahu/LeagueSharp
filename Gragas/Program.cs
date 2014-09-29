@@ -54,6 +54,7 @@ namespace Gragas
             Config.SubMenu("Combo").AddItem(new MenuItem("UseRCombo", "Use R").SetValue(true));
 
             Config.AddSubMenu(new Menu("Harass", "Harass"));
+            Config.SubMenu("Harass").AddItem(new MenuItem("UseQHarass", "Use Q").SetValue(true));
 
             Config.AddSubMenu(new Menu("LaneClear", "LaneClear"));
             Config.SubMenu("LaneClear").AddItem(new MenuItem("UseQLaneClear", "Use Q").SetValue(true));
@@ -95,12 +96,58 @@ namespace Gragas
             if (Program.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Mixed)
             {
                 //Game.PrintChat("harass");
-                //Harass();
+                Harass();
             }
             if (Program.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.LaneClear)
             {
                 //Game.PrintChat("laneclear");
                 LaneClear();
+            }
+        }
+
+        private static void Harass()
+        {
+            var useQ = Config.Item("UseQHarass").GetValue<bool>();
+
+            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
+            //Game.PrintChat(damage.ToString());
+
+            if (target == null)
+            {
+                return;
+            }
+            else
+            {
+                bool barrelRoll = Player.HasBuff("Barrel Roll");
+                if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
+                {
+                    SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
+                    if (!barrelRoll)
+                    {
+                        Q.Cast(predPos);
+                    }
+                    if (barrelRoll)
+                    {
+                        foreach (BuffInstance bi in Player.Buffs)
+                        {
+                            if (bi.DisplayName == "Barrel Roll")
+                            {
+                                float et = bi.EndTime;
+                                float st = bi.StartTime;
+                                float gt = Game.Time;
+                                float timeLeft = et - gt;
+                                float buffTime = et - st;
+                                if ((timeLeft / buffTime) < .25)
+                                {
+                                    Q.CastIfWillHit(target, 1);
+                                }
+                                Q.CastIfWillHit(target, 3);
+                            }
+                        }
+                    }
+
+                }
             }
         }
 
@@ -129,7 +176,7 @@ namespace Gragas
                 if (!barrelRoll && bLocation.MinionsHit > 0)
                 {
                     Q.Cast(bLocation.Position.To3D());
-                    
+
                 }
                 if (barrelRoll)
                 {
@@ -182,10 +229,11 @@ namespace Gragas
             else
             {
                 bool barrelRoll = Player.HasBuff("Barrel Roll");
-                if(useQ && target.IsValidTarget(Q.Range) && Q.IsReady()){
-                    Game.PrintChat("Q is Valid!");
+                if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
+                {
                     SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
-                    if(!barrelRoll){
+                    if (!barrelRoll)
+                    {
                         Q.Cast(predPos);
                     }
                     if (barrelRoll)
@@ -207,7 +255,7 @@ namespace Gragas
                             }
                         }
                     }
-                    
+
                 }
                 if (useW && W.IsReady())
                 {
@@ -215,17 +263,14 @@ namespace Gragas
                 }
                 if (useE && target.IsValidTarget(E.Range) && E.IsReady())
                 {
-                    Game.PrintChat("E can be used.");
                     PredictionOutput po = E.GetPrediction(target);
-                    E.Cast(po.CastPosition);
-                    Game.PrintChat("E has been used.");
+                    E.Cast(po.CastPosition);;
                 }
                 if (useR && R.IsReady())
                 {
                     //Game.PrintChat("R is Ready.");
-                    if (DamageLib.IsKillable(target, new[] {DamageLib.SpellType.R}))
+                    if (DamageLib.IsKillable(target, new[] { DamageLib.SpellType.R }))
                     {
-                        Game.PrintChat("R can kill target...");
                         PredictionOutput prediction;
                         prediction = R.GetPrediction(target, true);
                         R.Cast(prediction.CastPosition);
