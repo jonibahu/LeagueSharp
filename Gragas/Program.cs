@@ -241,7 +241,6 @@ namespace Gragas
                     if (!barrelRoll)
                     {
                         Q.Cast(predPos);
-                        //Game.PrintChat(time.ToString());
                     }
                     if (barrelRoll)
                     {
@@ -261,7 +260,7 @@ namespace Gragas
                 if (useE && eTarget.IsValidTarget(E.Range) && E.IsReady())
                 {
                     PredictionOutput po = E.GetPrediction(eTarget, true);
-                    if (po.Hitchance >= HitChance.Low)
+                    if (po.Hitchance >= HitChance.Medium)
                     {
                         E.Cast(po.CastPosition, true);
                     }
@@ -285,7 +284,7 @@ namespace Gragas
             {
                 if (buff.Name == "GragasQ")
                 {
-                    Game.PrintChat("Remaining Barrel Roll Time: " + (buff.EndTime - Game.Time).ToString());
+                    //Game.PrintChat("Remaining Barrel Roll Time: " + (buff.EndTime - Game.Time).ToString());
                     return buff.EndTime - Game.Time;
                 }
             }
