@@ -113,7 +113,6 @@ namespace Gragas
             Game.PrintChat("" + Q.Width);
             var rangedMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range, MinionTypes.Ranged);
             var allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
-
             if (useQ && Q.IsReady())
             {
                 bool barrelRoll = Player.HasBuff("Barrel Roll");
@@ -212,12 +211,8 @@ namespace Gragas
                 {
                     Game.PrintChat("E can be used.");
                     PredictionOutput po = E.GetPrediction(target);
-                    if (po.Hitchance >= HitChance.Medium && Player.Distance(po.CastPosition) < 600)
-                    {
-                        Game.PrintChat("E is being used.");
-                        E.Cast(po.CastPosition);
-                        Game.PrintChat("E has been used.");
-                    }
+                    E.Cast(po.CastPosition);
+                    Game.PrintChat("E has been used.");
                 }
                 if (useR && R.IsReady())
                 {
