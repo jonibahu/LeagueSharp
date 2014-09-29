@@ -267,7 +267,7 @@ namespace Gragas
                 {
                     PredictionOutput po = E.GetPrediction(target, true);
                     if(po.Hitchance >= HitChance.Low){
-                        E.Cast(po.CastPosition, true, true);
+                        E.Cast(po.CastPosition, true);
                     }
                 }
                 if (useR && R.IsReady())
