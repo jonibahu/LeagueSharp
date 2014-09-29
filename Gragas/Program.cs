@@ -219,20 +219,22 @@ namespace Gragas
             var useE = Config.Item("UseECombo").GetValue<bool>();
             var useR = Config.Item("UseRCombo").GetValue<bool>();
 
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var eTarget = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
+            var rTarget = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
 
-            if (target == null)
+            if (qTarget == null)
             {
                 return;
             }
             else
             {
                 bool barrelRoll = Player.HasBuff("Barrel Roll");
-                if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
+                if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
-                    SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
+                    SharpDX.Vector3 predPos = Prediction.GetPrediction(qTarget, 50).CastPosition;
                     if (!barrelRoll)
                     {
                         Q.Cast(predPos);
@@ -251,9 +253,9 @@ namespace Gragas
                                 Game.PrintChat(timeLeft.ToString());
                                 if (timeLeft < 2.5)
                                 {
-                                    Q.CastIfWillHit(target, 1);
+                                    Q.CastIfWillHit(qTarget, 1);
                                 }
-                                Q.CastIfWillHit(target, 3);
+                                Q.CastIfWillHit(qTarget, 3);
                             }
                         }
                     }
