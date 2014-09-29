@@ -245,6 +245,7 @@ namespace Gragas
                     }
                     if (barrelRoll)
                     {
+                        Game.PrintChat((Game.Time - time).ToString());
                         if (Game.Time - time < 2)
                         {
                             Q.CastIfWillHit(qTarget, 1);
