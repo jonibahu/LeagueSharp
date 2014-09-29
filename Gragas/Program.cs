@@ -131,7 +131,7 @@ namespace Gragas
                     {
                         foreach (BuffInstance bi in Player.Buffs)
                         {
-                            if (bi.DisplayName == "Barrel Roll")
+                            if (bi.Name == "GragasQ")
                             {
                                 float et = bi.EndTime;
                                 float st = bi.StartTime;
@@ -193,6 +193,7 @@ namespace Gragas
                     {
                         Q.Cast();
                     }
+
                 }
             }
             if (useE && E.IsReady())
@@ -222,6 +223,8 @@ namespace Gragas
             var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             var eTarget = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
             var rTarget = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
+
+
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
 
@@ -233,20 +236,18 @@ namespace Gragas
             {
                 bool barrelRoll = Player.HasBuff("GragasQ");
                 Game.PrintChat(barrelRoll.ToString());
-                float time = Game.Time;
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Prediction.GetPrediction(qTarget, 50).CastPosition;
                     if (!barrelRoll)
                     {
                         Q.Cast(predPos);
-                        time = Game.Time;
                         //Game.PrintChat(time.ToString());
                     }
                     if (barrelRoll)
                     {
-                        Game.PrintChat("GameTime - time " + (Game.Time - time).ToString());
-                        if (Game.Time - time < 2)
+                        ;
+                        if (getRemainingBarrelRoll() < 2)
                         {
                             Q.CastIfWillHit(qTarget, 1);
                         }
@@ -277,6 +278,18 @@ namespace Gragas
                     }
                 }
             }
+        }
+
+        private static float getRemainingBarrelRoll()
+        {
+            foreach (var buff in ObjectManager.Player.Buffs)
+            {
+                if (buff.Name == "GragasQ")
+                {
+                    return buff.EndTime - Game.Time;
+                }
+            }
+            return 0;
         }
     }
 }
