@@ -112,9 +112,28 @@ namespace Gragas
                     }
                     if (barrelRoll)
                     {
-                        Q.CastIfWillHit(target, 1);
+                        foreach (BuffInstance bi in Player.Buffs)
+                        {
+                            if (bi.DisplayName == "Barrel Roll")
+                            {
+                                float et = bi.EndTime;
+                                float st = bi.StartTime;
+                                float gt = Game.Time;
+                                float timeLeft = et - gt;
+                                float buffTime = et - st;
+                                if ((timeLeft / buffTime) < .25)
+                                {
+                                    Q.CastIfWillHit(target, 1);
+                                }
+                                Q.CastIfWillHit(target, 3);
+                            }
+                        }
                     }
                     
+                }
+                if (useW && W.IsReady())
+                {
+                    W.Cast();
                 }
             }
         }
