@@ -1,5 +1,6 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,16 +136,24 @@ namespace Gragas
                 {
                     W.Cast();
                 }
-                if (useE && E.IsReady())
+                if (useE && target.IsValidTarget(E.Range) && E.IsReady())
                 {
-                    SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
-                    E.Cast(predPos);
+                    PredictionOutput prediction;
+                    if (ObjectManager.Player.Distance(target) < E.Range)
+                    {
+                        prediction = E.GetPrediction(target, true);
+                        if (prediction.Hitchance >= HitChance.Medium)
+                        {
+                            E.Cast(prediction.CastPosition);
+                        }
+                    }
                 }
                 if (useR && R.IsReady())
                 {
-                    if (Damage.IsKillable(Player, target, new Tuple<SpellSlot, int> [] { Tuple.Create(SpellSlot.R, 1) } ))
+                    if (useR && R.IsReady() &&
+                        ObjectManager.Player.GetSpellDamage(target, SpellSlot.R) > target.Health)
                     {
-                        R.CastIfWillHit(target, 1);
+                        R.Cast(target, true, true);
                     }
                 }
             }
