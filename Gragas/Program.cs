@@ -248,6 +248,7 @@ namespace Gragas
                                 float gt = Game.Time;
                                 float timeLeft = et - gt;
                                 float buffTime = et - st;
+                                Game.PrintChat(timeLeft.ToString());
                                 if (timeLeft < 2.5)
                                 {
                                     Q.CastIfWillHit(target, 1);
