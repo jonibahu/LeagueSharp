@@ -85,6 +85,7 @@ namespace Gragas
         {
             if (Config.Item("ComboActive").GetValue<KeyBind>().Active)
             {
+                Game.PrintChat("combo");
                 Combo();
             }
             if (Config.Item("HarassActive").GetValue<KeyBind>().Active)
@@ -93,7 +94,7 @@ namespace Gragas
             }
             if (Config.Item("LaneClearActive").GetValue<KeyBind>().Active)
             {
-                Game.PrintChat("awdawd");
+                Game.PrintChat("laneclaer");
                 LaneClear();
             }
         }
