@@ -109,11 +109,11 @@ namespace Gragas
         {
             var useQ = Config.Item("UseQHarass").GetValue<bool>();
 
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
 
-            if (target == null)
+            if (qTarget == null)
             {
                 return;
             }
