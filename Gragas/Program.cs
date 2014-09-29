@@ -108,7 +108,7 @@ namespace Gragas
             var buffs = ObjectManager.Player.Buffs;
             foreach (var buff in buffs)
             {
-                Game.PrintChat("Player has Barrel Roll: " + buff.ToString());
+                Game.PrintChat("Player has Barrel Roll: " + buff.Name);
             }
             //Game.PrintChat("Player has Barrel Roll: " + buff.ToString());
         }
