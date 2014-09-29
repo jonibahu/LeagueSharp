@@ -142,6 +142,16 @@ namespace Gragas
                     }
                 }
             }
+            if (useE && E.IsReady())
+            {
+                var rangedLocation = Q.GetCircularFarmLocation(rangedMinions);
+                var location = Q.GetCircularFarmLocation(allMinions);
+                var bLocation = (location.MinionsHit > rangedLocation.MinionsHit + 1) ? location : rangedLocation;
+                if (bLocation.MinionsHit > 2)
+                {
+                    E.Cast(bLocation.Position.To3D());
+                }
+            }
         }
 
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
