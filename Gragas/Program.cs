@@ -85,6 +85,50 @@ namespace Gragas
             {
                 //Harass();
             }
+            if (Config.Item("LaneClearActive").GetValue<KeyBind>().Active)
+            {
+                LaneClear();
+            }
+        }
+
+        private static void LaneClear()
+        {
+            var useQ = Config.Item("UseQLaneClear").GetValue<bool>();
+            var useW = Config.Item("UseWLaneClear").GetValue<bool>();
+            var useE = Config.Item("UseELaneClear").GetValue<bool>();
+            var useR = Config.Item("UseRLaneClear").GetValue<bool>();
+            Game.PrintChat("" + Q.Width);
+            var rangedMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range, MinionTypes.Ranged);
+            var allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
+
+            if (useQ && Q.IsReady())
+            {
+                bool barrelRoll = Player.HasBuff("Barrel Roll");
+                var rangedLocation = Q.GetCircularFarmLocation(rangedMinions);
+                var location = Q.GetCircularFarmLocation(allMinions);
+                var bLocation = (location.MinionsHit > rangedLocation.MinionsHit + 1) ? location : rangedLocation;
+
+                if (!barrelRoll && bLocation.MinionsHit > 0)
+                {
+                    Q.Cast(bLocation.Position.To3D());
+                    
+                }
+                if (barrelRoll)
+                {
+                    int minionsHit = 0;
+                    foreach (var minion in allMinions)
+                    {
+                        if (Vector3.Distance(bLocation.Position.To3D(), minion.ServerPosition) <= Q.Width && Q.GetDamage(minion) > minion.Health)
+                        {
+                            minionsHit += 1;
+                        }
+                    }
+                    if (minionsHit >= 3)
+                    {
+                        Q.Cast();
+                    }
+                }
+            }
         }
 
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
