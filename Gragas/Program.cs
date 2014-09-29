@@ -238,6 +238,7 @@ namespace Gragas
                     if (!barrelRoll)
                     {
                         Q.Cast(predPos);
+                        Game.PrintChat("PreCasted Q.");
                     }
                     if (barrelRoll)
                     {
@@ -250,12 +251,14 @@ namespace Gragas
                                 float gt = Game.Time;
                                 float timeLeft = et - gt;
                                 float buffTime = et - st;
-                                Game.PrintChat(timeLeft.ToString());
+                                Game.PrintChat("Time left in buff: " + timeLeft.ToString());
                                 if (timeLeft < 2.5)
                                 {
                                     Q.CastIfWillHit(qTarget, 1);
+                                    Game.PrintChat("ReCasted Q for 1.");
                                 }
                                 Q.CastIfWillHit(qTarget, 3);
+                                Game.PrintChat("ReCasted Q for 3.");
                             }
                         }
                     }
@@ -264,12 +267,14 @@ namespace Gragas
                 if (useW && W.IsReady())
                 {
                     W.Cast();
+                    Game.PrintChat("Casted W.");
                 }
                 if (useE && eTarget.IsValidTarget(E.Range) && E.IsReady())
                 {
                     PredictionOutput po = E.GetPrediction(eTarget, true);
                     if(po.Hitchance >= HitChance.Low){
                         E.Cast(po.CastPosition, true);
+                        Game.PrintChat("Casted E.");
                     }
                 }
                 if (useR && R.IsReady())
@@ -280,6 +285,7 @@ namespace Gragas
                         PredictionOutput prediction;
                         prediction = R.GetPrediction(rTarget, true);
                         R.Cast(prediction.CastPosition);
+                        Game.PrintChat("Casted R.");
                     }
                 }
             }
