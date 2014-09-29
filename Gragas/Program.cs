@@ -52,7 +52,6 @@ namespace Gragas
             Config.SubMenu("Combo").AddItem(new MenuItem("UseWCombo", "Use W").SetValue(true));
             Config.SubMenu("Combo").AddItem(new MenuItem("UseECombo", "Use E").SetValue(true));
             Config.SubMenu("Combo").AddItem(new MenuItem("UseRCombo", "Use R").SetValue(true));
-            Config.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
 
             Config.AddSubMenu(new Menu("Harass", "Harass"));
 
@@ -88,7 +87,7 @@ namespace Gragas
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
-            if (Config.Item("ComboActive").GetValue<KeyBind>().Active)
+            if (Program.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
             {
                 //Game.PrintChat("combo");
                 Combo();
