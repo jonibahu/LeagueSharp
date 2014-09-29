@@ -119,32 +119,22 @@ namespace Gragas
             }
             else
             {
-                bool barrelRoll = Player.HasBuff("GragasQ");
-                if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
+                bool barrelRoll = ObjectManager.Player.HasBuff("GragasQ");
+                if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
-                    SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
+                    SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
                     if (!barrelRoll)
                     {
                         Q.Cast(predPos);
                     }
                     if (barrelRoll)
                     {
-                        foreach (BuffInstance bi in Player.Buffs)
+
+                        if (getRemainingBarrelRoll() < 3.2)
                         {
-                            if (bi.Name == "GragasQ")
-                            {
-                                float et = bi.EndTime;
-                                float st = bi.StartTime;
-                                float gt = Game.Time;
-                                float timeLeft = et - gt;
-                                float buffTime = et - st;
-                                if ((timeLeft / buffTime) < .25)
-                                {
-                                    Q.CastIfWillHit(target, 1);
-                                }
-                                Q.CastIfWillHit(target, 3);
-                            }
+                            Q.CastIfWillHit(qTarget, 1);
                         }
+                        Q.CastIfWillHit(qTarget, 3);
                     }
 
                 }
@@ -245,7 +235,7 @@ namespace Gragas
                     if (barrelRoll)
                     {
                         
-                        if (getRemainingBarrelRoll() < 3)
+                        if (getRemainingBarrelRoll() < 3.2)
                         {
                             Q.CastIfWillHit(qTarget, 1);
                         }
