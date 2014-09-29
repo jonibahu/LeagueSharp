@@ -56,7 +56,6 @@ namespace Gragas
             Config.SubMenu("LaneClear").AddItem(new MenuItem("UseWLaneClear", "Use W").SetValue(true));
             Config.SubMenu("LaneClear").AddItem(new MenuItem("UseELaneClear", "Use E").SetValue(true));
             Config.SubMenu("LaneClear").AddItem(new MenuItem("UseRLaneClear", "Use R").SetValue(true));
-            Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearActive", "LaneClear!").SetValue(new KeyBind(86, KeyBindType.Press)));
 
             Config.AddSubMenu(new Menu("Misc", "Misc"));
             Config.SubMenu("Misc").AddItem(new MenuItem("UseEAntiGapcloser", "E on Gapclose").SetValue(true));
@@ -89,14 +88,14 @@ namespace Gragas
                 Game.PrintChat("combo");
                 Combo();
             }
-            if (Config.Item("HarassActive").GetValue<KeyBind>().Active)
+            //if (Config.Item("HarassActive").GetValue<KeyBind>().Active)
+            //{
+            //    Game.PrintChat("combo");
+            //    //Harass();
+            //}
+            if (Program.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.LaneClear)
             {
-                Game.PrintChat("combo");
-                //Harass();
-            }
-            if (Config.Item("LaneClearActive").GetValue<KeyBind>().Active)
-            {
-                Game.PrintChat("laneclaer");
+                Game.PrintChat("laneclear");
                 //LaneClear();
             }
         }
