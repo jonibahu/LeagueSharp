@@ -210,10 +210,13 @@ namespace Gragas
                 }
                 if (useE && target.IsValidTarget(E.Range) && E.IsReady())
                 {
+                    Game.PrintChat("E can be used.");
                     PredictionOutput po = E.GetPrediction(target);
                     if (po.Hitchance >= HitChance.Medium && Player.Distance(po.CastPosition) < 600)
                     {
+                        Game.PrintChat("E is being used.");
                         E.Cast(po.CastPosition);
+                        Game.PrintChat("E has been used.");
                     }
                 }
                 if (useR && R.IsReady())
