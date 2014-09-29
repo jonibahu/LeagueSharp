@@ -26,11 +26,16 @@ namespace Gragas
             Player = ObjectManager.Player;
             if (Player.BaseSkinName != ChampionName) return;
             Game.PrintChat("Loading 'Roll Out The Barrel'...");
+
             Q = new Spell(SpellSlot.Q, 850);
+            Q.SetSkillshot(0.7f, 125f, float.MaxValue, false, SkillshotType.SkillshotCircle);
 
             W = new Spell(SpellSlot.W, 0);
+
             E = new Spell(SpellSlot.E, 600);
+
             R = new Spell(SpellSlot.R, 1150);
+            R.SetSkillshot(0.7f, 125f, float.MaxValue, false, SkillshotType.SkillshotCircle);
 
             Config = new Menu("Roll Out The Barrel", ChampionName, true);
 
@@ -85,17 +90,17 @@ namespace Gragas
         {
             if (Config.Item("ComboActive").GetValue<KeyBind>().Active)
             {
-                Game.PrintChat("combo");
+                //Game.PrintChat("combo");
                 Combo();
             }
-            //if (Config.Item("HarassActive").GetValue<KeyBind>().Active)
-            //{
-            //    Game.PrintChat("combo");
-            //    //Harass();
-            //}
+            if (Program.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Mixed)
+            {
+                //Game.PrintChat("harass");
+                //Harass();
+            }
             if (Program.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.LaneClear)
             {
-                Game.PrintChat("laneclear");
+                //Game.PrintChat("laneclear");
                 LaneClear();
             }
         }
