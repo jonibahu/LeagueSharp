@@ -93,6 +93,7 @@ namespace Gragas
             }
             if (Config.Item("LaneClearActive").GetValue<KeyBind>().Active)
             {
+                Game.PrintChat("awdawd");
                 LaneClear();
             }
         }
