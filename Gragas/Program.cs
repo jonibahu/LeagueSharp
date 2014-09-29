@@ -103,14 +103,6 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            
-
-            var buffs = ObjectManager.Player.Buffs;
-            foreach (var buff in buffs)
-            {
-                Game.PrintChat("Player has Barrel Roll: " + buff.Name);
-            }
-            //Game.PrintChat("Player has Barrel Roll: " + buff.ToString());
         }
 
         private static void Harass()
@@ -127,7 +119,7 @@ namespace Gragas
             }
             else
             {
-                bool barrelRoll = Player.HasBuff("Barrel Roll");
+                bool barrelRoll = Player.HasBuff("GragasQ");
                 if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Prediction.GetPrediction(target, 50).CastPosition;
@@ -177,7 +169,7 @@ namespace Gragas
             }
             if (useQ && Q.IsReady())
             {
-                bool barrelRoll = Player.HasBuff("Barrel Roll");
+                bool barrelRoll = Player.HasBuff("GragasQ");
                 var rangedLocation = Q.GetCircularFarmLocation(rangedMinions);
                 var location = Q.GetCircularFarmLocation(allMinions);
                 var bLocation = (location.MinionsHit > rangedLocation.MinionsHit + 1) ? location : rangedLocation;
@@ -239,7 +231,7 @@ namespace Gragas
             }
             else
             {
-                bool barrelRoll = Player.HasBuff("Barrel Roll");
+                bool barrelRoll = Player.HasBuff("GragasQ");
                 Game.PrintChat(barrelRoll.ToString());
                 float time = Game.Time;
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
