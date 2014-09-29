@@ -157,7 +157,7 @@ namespace Gragas
             var useR = Config.Item("UseRCombo").GetValue<bool>();
 
             var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-            var damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
+            double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             Game.PrintChat(damage.ToString());
 
             if (target == null)
