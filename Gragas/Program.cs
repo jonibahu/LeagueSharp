@@ -50,6 +50,7 @@ namespace Gragas
             Config.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
 
             Config.AddSubMenu(new Menu("Harass", "Harass"));
+
             Config.AddSubMenu(new Menu("LaneClear", "LaneClear"));
             Config.SubMenu("LaneClear").AddItem(new MenuItem("UseQLaneClear", "Use Q").SetValue(true));
             Config.SubMenu("LaneClear").AddItem(new MenuItem("UseWLaneClear", "Use W").SetValue(true));
@@ -90,12 +91,13 @@ namespace Gragas
             }
             if (Config.Item("HarassActive").GetValue<KeyBind>().Active)
             {
+                Game.PrintChat("combo");
                 //Harass();
             }
             if (Config.Item("LaneClearActive").GetValue<KeyBind>().Active)
             {
                 Game.PrintChat("laneclaer");
-                LaneClear();
+                //LaneClear();
             }
         }
 
