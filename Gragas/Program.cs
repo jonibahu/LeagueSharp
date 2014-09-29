@@ -265,8 +265,10 @@ namespace Gragas
                 }
                 if (useE && target.IsValidTarget(E.Range) && E.IsReady())
                 {
-                    PredictionOutput po = E.GetPrediction(target);
-                    E.Cast(po.CastPosition);;
+                    PredictionOutput po = E.GetPrediction(target, true);
+                    if(po.Hitchance >= HitChance.Low){
+                        E.Cast(po.CastPosition, true, true);
+                    }
                 }
                 if (useR && R.IsReady())
                 {
