@@ -254,8 +254,9 @@ namespace Gragas
                 }
                 if (useR && R.IsReady())
                 {
+
                     //Game.PrintChat("R is Ready.");
-                    if (DamageLib.IsKillable(rTarget, new[] { DamageLib.SpellType.R }))
+                    if (Damage.IsKillable(ObjectManager.Player, rTarget, new[] { Tuple.Create<SpellSlot, int>(SpellSlot.R, 1) }))
                     {
                         PredictionOutput prediction;
                         prediction = R.GetPrediction(rTarget, true);

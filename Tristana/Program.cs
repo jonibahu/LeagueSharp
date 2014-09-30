@@ -118,7 +118,7 @@ namespace Tristana
         {
             foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(enemy => enemy.IsValidTarget(R.Range)))
             {
-                if (R.IsReady() && DamageLib.IsKillable(enemy, new[] { DamageLib.SpellType.R }))
+                if (R.IsReady() && Damage.IsKillable(ObjectManager.Player, enemy, new[] { Tuple.Create<SpellSlot, int>(SpellSlot.R, 1)} ))
                 {
                     R.CastOnUnit(enemy);
                 }
@@ -141,7 +141,7 @@ namespace Tristana
                 if (useE && E.IsReady()) { E.Cast(target); }
                 if (useR && R.IsReady())
                 {
-                    if (DamageLib.IsKillable(target, new[] { DamageLib.SpellType.R }))
+                    if (Damage.IsKillable(ObjectManager.Player, target, new[] { Tuple.Create<SpellSlot, int>(SpellSlot.R, 1) }))
                     {
                         R.CastOnUnit(target);
                     }
