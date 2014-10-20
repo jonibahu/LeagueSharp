@@ -226,71 +226,73 @@ namespace Gragas
             var useE = Config.Item("UseECombo").GetValue<bool>();
             var useR = Config.Item("UseRCombo").GetValue<bool>();
 
-            Obj_AI_Hero target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-            Game.PrintChat(target.Name);
-
             if (useQ)
             {
-                ComboQ(target);
-                ComboQ2(target);
+                ComboQ();
+                ComboQ2();
             }
             if (useW)
             {
-                ComboW(target);
+                ComboW();
             }
             if (useE)
             {
-                ComboE(target);
+                ComboE();
             }
             if (useR)
             {
-                ComboR(target);
+                ComboR();
             }
         }
 
-        private static void ComboQ(Obj_AI_Hero target)
+        private static void ComboQ()
         {
-            if (Q.IsReady() && _qObject == null && target.IsValidTarget(Q.Range))
+            var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            if (Q.IsReady() && _qObject == null && t.IsValidTarget(Q.Range))
             {
-                PredictionOutput pred = Prediction.GetPrediction(target, Q.Delay, Q.Width/2, Q.Speed);
+                PredictionOutput pred = Prediction.GetPrediction(t, Q.Delay, Q.Width/2, Q.Speed);
                 Q.Cast(pred.CastPosition);
             }
         }
 
-        private static void ComboQ2(Obj_AI_Hero target)
+        private static void ComboQ2()
         {
+            var t = SimpleTs.GetTarget(Q2.Range, SimpleTs.DamageType.Magical);
             if (_qObject != null)
             {
-                if (target.Distance(_qObject.Position) < Q2.Range)
+                if (t.Distance(_qObject.Position) < Q2.Range)
                 {
                     Q.Cast();
                 }
             }
         }
 
-        private static void ComboW(Obj_AI_Hero target)
+        private static void ComboW()
         {
-            if (W.IsReady() && _player.Distance(target) < 250)
+            var t = SimpleTs.GetTarget(W.Range, SimpleTs.DamageType.Magical);
+            if (W.IsReady() && _player.Distance(t) < 250)
             {
                 W.Cast();
             }
         }
 
-        private static void ComboE(Obj_AI_Hero target)
+        private static void ComboE()
         {
-            if (E.IsReady() && target.IsValidTarget(E.Range))
+            var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
+            if (E.IsReady() && t.IsValidTarget(E.Range))
             {
-                PredictionOutput pred = Prediction.GetPrediction(target, E.Delay, E.Width/2, E.Speed);
+                PredictionOutput pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
                 E.Cast(pred.CastPosition);
             }
         }
 
-        private static void ComboR(Obj_AI_Hero target)
+        private static void ComboR()
         {
-            Game.PrintChat("R Killable: " + R.IsKillable(target));
-            if (R.IsReady() && target.IsValidTarget(R.Range) && R.IsKillable(target))
+            var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
+            Game.PrintChat("R Killable: " + R.IsKillable(t));
+            if (R.IsReady() && t.IsValidTarget(R.Range) && R.IsKillable(t))
             {
-                PredictionOutput pred = Prediction.GetPrediction(target, R.Delay, R.Width/2, R.Speed);
+                PredictionOutput pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
                 R.Cast(pred.CastPosition);
             }
         }
