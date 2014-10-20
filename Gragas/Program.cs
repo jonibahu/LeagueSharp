@@ -130,6 +130,7 @@ namespace Gragas
                 if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
                 {
                     Q.Cast();
+                    QprojectileOut = false;
                     Console.WriteLine("QcastChampinWidth");
                 }
             }
@@ -260,6 +261,7 @@ namespace Gragas
                 if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
                 {
                     Q.Cast();
+                    QprojectileOut = false;
                     Console.WriteLine("QcastChampinWidth");
                 }
             }
