@@ -28,14 +28,15 @@ namespace Gragas
             Game.PrintChat("Loading 'Roll Out The Barrel'...");
 
             Q = new Spell(SpellSlot.Q, 850);
-            Q.SetSkillshot(0.7f, 125f, float.MaxValue, false, SkillshotType.SkillshotCircle);
+            Q.SetSkillshot(-0.5f, 110f, 1000f, false, SkillshotType.SkillshotCircle);
 
             W = new Spell(SpellSlot.W, 0);
 
             E = new Spell(SpellSlot.E, 600);
+            E.SetSkillshot(-0.5f, 50f, 20f, true, SkillshotType.SkillshotLine);
 
             R = new Spell(SpellSlot.R, 1150);
-            R.SetSkillshot(0.7f, 125f, float.MaxValue, false, SkillshotType.SkillshotCircle);
+            R.SetSkillshot(-0.5f, 120f, 200f, false, SkillshotType.SkillshotCircle);
 
             Config = new Menu("Roll Out The Barrel", ChampionName, true);
 
@@ -129,11 +130,11 @@ namespace Gragas
                     }
                     if (barrelRoll)
                     {
-
-                        if (getRemainingBarrelRoll() < 3.2)
+                        float br;
+                        if ((br = getRemainingBarrelRoll()) < 3.2)
                         {
+                            Console.WriteLine("Remaining Barrel Roll: " + br);
                             Q.CastIfWillHit(qTarget, 1);
-                            Console.WriteLine("dawdawd");
                         }
                         Q.CastIfWillHit(qTarget, 3);
                     }
@@ -250,8 +251,7 @@ namespace Gragas
                 }
                 if (useE && eTarget.IsValidTarget(E.Range) && E.IsReady())
                 {
-                    PredictionOutput po = E.GetPrediction(eTarget, true);
-                    E.Cast(po.CastPosition, true);
+                    
                 }
                 if (useR && R.IsReady())
                 {
