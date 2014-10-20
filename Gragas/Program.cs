@@ -246,7 +246,7 @@ namespace Gragas
         }
         private static void ComboQ2(Obj_AI_Hero target)
         {
-            if (QObject != null && Q.)
+            if (QObject != null)
             {
                 if (target.Distance(QObject.Position) < Q2.Range)
                 {
@@ -277,7 +277,7 @@ namespace Gragas
             Game.PrintChat("R Killable: " + R.IsKillable(target));
             if (R.IsReady() && target.IsValidTarget(E.Range) && R.IsKillable(target))
             {
-                PredictionOutput pred = Prediction.GetPrediction(target, R.Delay, R.Width / 2, R.Speed);\
+                PredictionOutput pred = Prediction.GetPrediction(target, R.Delay, R.Width / 2, R.Speed);
                 R.Cast(pred.CastPosition, true);
             }
         }
