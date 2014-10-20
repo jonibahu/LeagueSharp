@@ -143,7 +143,7 @@ namespace Gragas
             }
         }
 
-        private string gragQStatus()
+        private static string gragQStatus()
         {
             if (QObject == null)
             {
