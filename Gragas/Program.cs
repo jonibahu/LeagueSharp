@@ -238,10 +238,7 @@ namespace Gragas
             if (Q.IsReady() && QObject == null && target.IsValidTarget(Q.Range))
             {
                 PredictionOutput pred = Prediction.GetPrediction(target, Q.Delay, Q.Width / 2, Q.Speed);
-                if (pred.Hitchance == HitChance.Medium)
-                {
-                    Q.Cast(pred.CastPosition);
-                }
+                Q.Cast(pred.CastPosition);
             }
         }
         private static void ComboQ2(Obj_AI_Hero target)
@@ -266,16 +263,13 @@ namespace Gragas
             if (E.IsReady() && target.IsValidTarget(E.Range))
             {
                 PredictionOutput pred = Prediction.GetPrediction(target, E.Delay, E.Width / 2, E.Speed);
-                if (E.WillHit(target, pred.CastPosition))
-                {
-                    E.Cast(pred.CastPosition);
-                }
+                E.Cast(pred.CastPosition);
             }
         }
         private static void ComboR(Obj_AI_Hero target)
         {
             Game.PrintChat("R Killable: " + R.IsKillable(target));
-            if (R.IsReady() && target.IsValidTarget(E.Range) && R.IsKillable(target))
+            if (R.IsReady() && target.IsValidTarget(R.Range) && R.IsKillable(target))
             {
                 PredictionOutput pred = Prediction.GetPrediction(target, R.Delay, R.Width / 2, R.Speed);
                 R.Cast(pred.CastPosition);
