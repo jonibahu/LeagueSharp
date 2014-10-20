@@ -118,28 +118,21 @@ namespace Gragas
             var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
-            if (QObject != null)
-                    {
-
-                        if ((Game.Time - QObjectMaxDamageTime) >= 0 && (qTarget.Distance(QObject.Position) < (Q.Width / 2)))
-                        {
-                            Q.Cast();
-                        }
-                    }
             if (qTarget == null)
             {
                 return;
             }
             else
             {
+                Console.WriteLine("qtarget is valid...");
                 if (QObject != null)
                 {
-
-                    if ((Game.Time - QObjectMaxDamageTime) >= 0)
+                    Console.WriteLine(QObject.Position.ToString());
+                    if ((Game.Time - QObjectMaxDamageTime) >= 0 && (qTarget.Distance(QObject.Position) < (Q.Width / 2)))
                     {
-                        Q.CastIfWillHit(qTarget, 1);
+                        Q.Cast();
+                        Game.PrintChat("casting to hit one");
                     }
-                    Q.CastIfWillHit(qTarget, 3);
                 }
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
