@@ -16,6 +16,7 @@ namespace Gragas
         public static Spell Q, W, E, R;
         public static Menu Config;
         private static Obj_AI_Hero Player;
+        private static GameObject QObject = null;
         public static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
@@ -105,6 +106,11 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
+            if (QObject != null)
+            {
+                Game.PrintChat(Player.Distance(QObject.Position).ToString());
+            }
+
         }
 
         private static void Harass()
@@ -206,10 +212,12 @@ namespace Gragas
             if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q"))
             {
                 Game.PrintChat("Gragas Q is out!");
+                QObject = sender;
             }
             if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && sender.Name.Contains("End"))
             {
                 Game.PrintChat("Gragas Q has exploded!");
+                QObject = null;
             }
             
         }
