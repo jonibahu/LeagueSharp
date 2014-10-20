@@ -107,10 +107,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            if (Game.Time % 1 == 0)
-            {
-                Console.WriteLine(Game.Time);
-            }
+            Console.WriteLine(Game.Time);
         }
 
         private static void Harass()
