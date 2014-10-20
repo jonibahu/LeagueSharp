@@ -251,7 +251,7 @@ namespace Gragas
                 }
                 if (useE && eTarget.IsValidTarget(E.Range) && E.IsReady())
                 {
-                    
+                    E.Cast(eTarget, true);
                 }
                 if (useR && R.IsReady())
                 {
