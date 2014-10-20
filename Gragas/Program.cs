@@ -140,7 +140,6 @@ namespace Gragas
                 if (QObject == null && CanUseQLaunch)
                 {
                     Q.Cast(predPos, true);
-                    CanUseQLaunch = false;
                     Console.WriteLine("QcastInitial");
                 }
 
@@ -270,7 +269,6 @@ namespace Gragas
                 if (QObject == null && CanUseQLaunch)
                 {
                     Q.Cast(target, true);
-                    CanUseQLaunch = false;
                     Console.WriteLine("QcastInitial");
 
                 }
