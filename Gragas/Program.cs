@@ -108,6 +108,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
+            gragQStatus();
         }
 
         private static void Harass()
@@ -140,6 +141,15 @@ namespace Gragas
 
 
             }
+        }
+
+        private string gragQStatus()
+        {
+            if (QObject == null)
+            {
+                return "NULL";
+            }
+            return QObject.ToString();
         }
 
         private static void LaneClear()
