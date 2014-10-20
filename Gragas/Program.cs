@@ -225,16 +225,14 @@ namespace Gragas
                 QObjectMaxDamageTime = QObjectCreateTime + 2;
                 QprojectileOut = false;
             }
-            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && sender.Name.Contains("End"))
+
+        }
+        private static void OnDeleteObject(GameObject sender, EventArgs args)
+        {
+            if (sender.Name.Contains("Gragas"))
             {
                 Game.PrintChat(sender.Name);
-                Game.PrintChat("Gragas Q has exploded!");
-                QObject = null;
-                QObjectCreateTime = 0f;
-                QObjectMaxDamageTime = QObjectCreateTime + 2;
-                QprojectileOut = false;
             }
-
         }
 
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
