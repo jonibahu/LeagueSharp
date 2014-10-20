@@ -203,7 +203,15 @@ namespace Gragas
 
         private static void OnCreateObject(GameObject sender, EventArgs args)
         {
-            Game.PrintChat(sender.Name);
+            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q"))
+            {
+                Game.PrintChat("Gragas Q is out!");
+            }
+            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && sender.Name.Contains("End"))
+            {
+                Game.PrintChat("Gragas Q has exploded!");
+            }
+            
         }
 
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
