@@ -18,6 +18,7 @@ namespace Gragas
         private static Obj_AI_Hero Player;
         private static GameObject QObject = null;
         private static float QObjectCreateTime = 0f;
+        private static bool QprojectileOut = false;
         private static float QObjectMaxDamageTime = 0f;
         public static void Main(string[] args)
         {
@@ -135,9 +136,10 @@ namespace Gragas
             if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
             {
                 SharpDX.Vector3 predPos = Q.GetPrediction(target).CastPosition;
-                if (QObject == null)
+                if (QObject == null && QprojectileOut == false)
                 {
                     Q.Cast(predPos, true);
+                    QprojectileOut = true;
                     Console.WriteLine("QcastInitial");
                 }
 
@@ -147,7 +149,7 @@ namespace Gragas
 
         private static string gragQStatus()
         {
-            if (QObject == null)
+            if (QObject == null && QprojectileOut == false)
             {
                 return "NULL";
             }
@@ -228,6 +230,7 @@ namespace Gragas
                 QObject = null;
                 QObjectCreateTime = 0f;
                 QObjectMaxDamageTime = QObjectCreateTime + 2;
+                QprojectileOut = false;
             }
 
         }
@@ -262,9 +265,10 @@ namespace Gragas
             }
             if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
             {
-                if (QObject == null)
+                if (QObject == null && QprojectileOut == false)
                 {
                     Q.Cast(target, true);
+                    QprojectileOut = true;
                     Console.WriteLine("QcastInitial");
 
                 }
