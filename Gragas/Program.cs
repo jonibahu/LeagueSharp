@@ -108,7 +108,8 @@ namespace Gragas
             }
             if (QObject != null)
             {
-                Game.PrintChat(Player.Distance(QObject.Position).ToString());
+                if(Game.ClockTime % 2 == 0)
+                    Game.PrintChat(Player.Distance(QObject.Position).ToString());
             }
 
         }
