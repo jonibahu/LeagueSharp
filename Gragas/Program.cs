@@ -120,6 +120,7 @@ namespace Gragas
 
         private static void Harass()
         {
+            Console.WriteLine("harass");
             var useQ = Config.Item("UseQHarass").GetValue<bool>();
 
             var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
@@ -156,6 +157,7 @@ namespace Gragas
 
         private static void LaneClear()
         {
+            Console.WriteLine("laneclear");
             var useQ = Config.Item("UseQLaneClear").GetValue<bool>();
             var useW = Config.Item("UseWLaneClear").GetValue<bool>();
             var useE = Config.Item("UseELaneClear").GetValue<bool>();
@@ -237,6 +239,7 @@ namespace Gragas
 
         private static void Combo()
         {
+            Console.WriteLine("combo");
             var useQ = Config.Item("UseQCombo").GetValue<bool>();
             var useW = Config.Item("UseWCombo").GetValue<bool>();
             var useE = Config.Item("UseECombo").GetValue<bool>();
