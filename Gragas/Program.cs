@@ -225,7 +225,7 @@ namespace Gragas
             var useR = Config.Item("UseRCombo").GetValue<bool>();
 
             var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-
+            Game.PrintChat(target.Name);
 
             if (useQ) { ComboQ(target); ComboQ2(target); }
             if (useW) { ComboW(target); }
