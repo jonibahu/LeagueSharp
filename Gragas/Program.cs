@@ -18,7 +18,7 @@ namespace Gragas
         private static Obj_AI_Hero Player;
         private static GameObject QObject = null;
         private static float QObjectCreateTime = 0f;
-        private static bool QprojectileOut = false;
+        private static bool CanUseQLaunch = true;
         private static float QObjectMaxDamageTime = 0f;
         public static void Main(string[] args)
         {
@@ -110,7 +110,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            Console.WriteLine(QprojectileOut.ToString());
+            Console.WriteLine(CanUseQLaunch.ToString());
         }
 
         private static void Harass()
@@ -131,17 +131,16 @@ namespace Gragas
                 if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
                 {
                     Q.Cast();
-                    QprojectileOut = false;
                     Console.WriteLine("QcastChampinWidth");
                 }
             }
             if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
             {
                 SharpDX.Vector3 predPos = Q.GetPrediction(target).CastPosition;
-                if (QObject == null && QprojectileOut == false)
+                if (QObject == null && CanUseQLaunch)
                 {
                     Q.Cast(predPos, true);
-                    QprojectileOut = true;
+                    CanUseQLaunch = false;
                     Console.WriteLine("QcastInitial");
                 }
 
@@ -151,7 +150,7 @@ namespace Gragas
 
         private static string gragQStatus()
         {
-            if (QObject == null && QprojectileOut == false)
+            if (QObject == null && CanUseQLaunch)
             {
                 return "NULL";
             }
@@ -217,22 +216,24 @@ namespace Gragas
 
         private static void OnCreateObject(GameObject sender, EventArgs args)
         {
-            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && !sender.Name.Contains("End"))
+            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q_Ally"))
             {
                 Game.PrintChat(sender.Name);
                 Game.PrintChat("Gragas Q is out!");
                 QObject = sender;
                 QObjectCreateTime = Game.Time;
                 QObjectMaxDamageTime = QObjectCreateTime + 2;
-                QprojectileOut = false;
+                CanUseQLaunch = false;
             }
 
         }
         private static void OnDeleteObject(GameObject sender, EventArgs args)
         {
-            if (sender.Name.Contains("Gragas"))
+            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q_Ally"))
             {
                 Game.PrintChat(sender.Name);
+                Game.PrintChat("Gragas Q exploded!");
+                CanUseQLaunch = true;
             }
         }
 
@@ -261,16 +262,15 @@ namespace Gragas
                 if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
                 {
                     Q.Cast();
-                    QprojectileOut = false;
                     Console.WriteLine("QcastChampinWidth");
                 }
             }
             if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
             {
-                if (QObject == null && QprojectileOut == false)
+                if (QObject == null && CanUseQLaunch)
                 {
                     Q.Cast(target, true);
-                    QprojectileOut = true;
+                    CanUseQLaunch = false;
                     Console.WriteLine("QcastInitial");
 
                 }
