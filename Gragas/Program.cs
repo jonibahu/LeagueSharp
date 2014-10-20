@@ -18,6 +18,7 @@ namespace Gragas
         private static Obj_AI_Hero Player;
         private static GameObject QObject = null;
         private static float QObjectCreateTime = 0f;
+        private static float QObjectMaxDamageTime = 0f;
         public static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
@@ -131,12 +132,11 @@ namespace Gragas
                     {
                         Q.Cast(predPos);
                     }
-                    if (QObject == null)
+                    if (QObject != null)
                     {
-                        float br;
-                        if ((br = getRemainingBarrelRoll()) < 3.2)
+
+                        if (Game.Time >= QObjectMaxDamageTime)
                         {
-                            Console.WriteLine("Remaining Barrel Roll: " + br);
                             Q.CastIfWillHit(qTarget, 1);
                         }
                         Q.CastIfWillHit(qTarget, 3);
@@ -209,15 +209,17 @@ namespace Gragas
             {
                 Game.PrintChat("Gragas Q is out!");
                 QObject = sender;
-                QObjectCreateTime = Game.ClockTime;
+                QObjectCreateTime = Game.Time;
+                QObjectMaxDamageTime = QObjectCreateTime + 2;
             }
             if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && sender.Name.Contains("End"))
             {
                 Game.PrintChat("Gragas Q has exploded!");
                 QObject = null;
                 QObjectCreateTime = 0f;
+                QObjectMaxDamageTime = QObjectCreateTime + 2;
             }
-            
+
         }
 
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
@@ -235,9 +237,6 @@ namespace Gragas
             var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             var eTarget = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
             var rTarget = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
-
-            var damage = Damage.CalcDamage(ObjectManager.Player, qTarget, Damage.DamageType.Magical, qTarget.Health);
-            Console.WriteLine("Q Damage Pred: " + damage);
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
 
@@ -247,18 +246,17 @@ namespace Gragas
             }
             else
             {
-                bool barrelRoll = ObjectManager.Player.HasBuff("GragasQ");
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
-                    if (!barrelRoll)
+                    if (QObject == null)
                     {
                         Q.Cast(predPos);
                     }
-                    if (barrelRoll)
+                    if (QObject != null)
                     {
-                        
-                        if (getRemainingBarrelRoll() < 3.2)
+
+                        if (Game.Time >= QObjectMaxDamageTime)
                         {
                             Q.CastIfWillHit(qTarget, 1);
                         }
