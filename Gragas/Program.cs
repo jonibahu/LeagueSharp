@@ -133,6 +133,7 @@ namespace Gragas
                         if (getRemainingBarrelRoll() < 3.2)
                         {
                             Q.CastIfWillHit(qTarget, 1);
+                            Console.WriteLine("dawdawd");
                         }
                         Q.CastIfWillHit(qTarget, 3);
                     }
