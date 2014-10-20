@@ -108,7 +108,6 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            Console.WriteLine(Game.Time);
         }
 
         private static void Harass()
@@ -255,7 +254,7 @@ namespace Gragas
                     }
                     if (QObject != null)
                     {
-
+                        Console.WriteLine(QObject.Position.ToString());
                         if (Game.Time >= QObjectMaxDamageTime)
                         {
                             Q.CastIfWillHit(qTarget, 1);
