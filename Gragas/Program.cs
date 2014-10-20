@@ -30,15 +30,15 @@ namespace Gragas
             if (Player.BaseSkinName != ChampionName) return;
             Game.PrintChat("Loading 'Roll Out The Barrel'...");
 
-            Q = new Spell(SpellSlot.Q, 850);
+            Q = new Spell(SpellSlot.Q, 850f);
             Q.SetSkillshot(-0.5f, 110f, 1000f, false, SkillshotType.SkillshotCircle);
 
-            W = new Spell(SpellSlot.W, 0);
+            W = new Spell(SpellSlot.W, 0f);
 
-            E = new Spell(SpellSlot.E, 600);
+            E = new Spell(SpellSlot.E, 600f);
             E.SetSkillshot(-0.5f, 50f, 20f, true, SkillshotType.SkillshotLine);
 
-            R = new Spell(SpellSlot.R, 1150);
+            R = new Spell(SpellSlot.R, 1150f);
             R.SetSkillshot(-0.5f, 120f, 200f, false, SkillshotType.SkillshotCircle);
 
             Config = new Menu("Roll Out The Barrel", ChampionName, true);
