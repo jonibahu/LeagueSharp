@@ -223,6 +223,7 @@ namespace Gragas
                 QObject = sender;
                 QObjectCreateTime = Game.Time;
                 QObjectMaxDamageTime = QObjectCreateTime + 2;
+                QprojectileOut = false;
             }
             if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && sender.Name.Contains("End"))
             {
