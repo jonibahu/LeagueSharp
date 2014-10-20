@@ -30,16 +30,16 @@ namespace Gragas
             if (Player.BaseSkinName != ChampionName) return;
             Game.PrintChat("Loading 'Roll Out The Barrel'...");
 
-            Q = new Spell(SpellSlot.Q, 850f);
+            Q = new Spell(SpellSlot.Q, 1100);
             Q.SetSkillshot(-0.5f, 110f, 1000f, false, SkillshotType.SkillshotCircle);
 
-            W = new Spell(SpellSlot.W, 0f);
+            W = new Spell(SpellSlot.W, 0);
 
-            E = new Spell(SpellSlot.E, 600f);
-            E.SetSkillshot(-0.5f, 50f, 20f, true, SkillshotType.SkillshotLine);
+            E = new Spell(SpellSlot.E, 1100);
+            E.SetSkillshot(0.3f, 50, 1000, true, SkillshotType.SkillshotLine);
 
-            R = new Spell(SpellSlot.R, 1150f);
-            R.SetSkillshot(-0.5f, 120f, 200f, false, SkillshotType.SkillshotCircle);
+            R = new Spell(SpellSlot.R, 1100);
+            R.SetSkillshot(0.3f, 700, 1000, false, SkillshotType.SkillshotCircle);
 
             Config = new Menu("Roll Out The Barrel", ChampionName, true);
 
@@ -108,7 +108,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            Console.WriteLine(gragQStatus());
+            //Console.WriteLine(gragQStatus());
         }
 
         private static void Harass()
