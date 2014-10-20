@@ -108,7 +108,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            gragQStatus();
+            Console.WriteLine(gragQStatus());
         }
 
         private static void Harass()
