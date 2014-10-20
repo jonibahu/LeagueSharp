@@ -251,8 +251,10 @@ namespace Gragas
                     if (Game.Time >= QObjectMaxDamageTime)
                     {
                         Q.CastIfWillHit(qTarget, 1);
+                        Game.PrintChat("casting to hit one");
                     }
                     Q.CastIfWillHit(qTarget, 3);
+                    Game.PrintChat("casting to hit multiple");
                 }
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
