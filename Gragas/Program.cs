@@ -17,6 +17,7 @@ namespace Gragas
         public static Menu Config;
         private static Obj_AI_Hero Player;
         private static GameObject QObject = null;
+        private static float QObjectCreateTime = 0f;
         public static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
@@ -106,12 +107,10 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            if (QObject != null)
+            if (Game.Time % 1 == 0)
             {
-                if(Game.ClockTime % 2 == 0)
-                    Game.PrintChat(Player.Distance(QObject.Position).ToString());
+                Console.WriteLine(Game.Time);
             }
-
         }
 
         private static void Harass()
@@ -128,15 +127,14 @@ namespace Gragas
             }
             else
             {
-                bool barrelRoll = ObjectManager.Player.HasBuff("GragasQ");
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
-                    if (!barrelRoll)
+                    if (QObject == null)
                     {
                         Q.Cast(predPos);
                     }
-                    if (barrelRoll)
+                    if (QObject == null)
                     {
                         float br;
                         if ((br = getRemainingBarrelRoll()) < 3.2)
@@ -214,11 +212,13 @@ namespace Gragas
             {
                 Game.PrintChat("Gragas Q is out!");
                 QObject = sender;
+                QObjectCreateTime = Game.ClockTime;
             }
             if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && sender.Name.Contains("End"))
             {
                 Game.PrintChat("Gragas Q has exploded!");
                 QObject = null;
+                QObjectCreateTime = 0f;
             }
             
         }
