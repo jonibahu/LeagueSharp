@@ -109,6 +109,7 @@ namespace Gragas
                 LaneClear();
             }
             Console.WriteLine(Game.Time - QObjectMaxDamageTime);
+            Console.WriteLine(QObject.ToString());
         }
 
         private static void Harass()
