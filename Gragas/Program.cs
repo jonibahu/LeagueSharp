@@ -203,6 +203,7 @@ namespace Gragas
         {
             if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && !sender.Name.Contains("End"))
             {
+                Game.PrintChat(sender.Name);
                 Game.PrintChat("Gragas Q is out!");
                 QObject = sender;
                 QObjectCreateTime = Game.Time;
@@ -210,6 +211,7 @@ namespace Gragas
             }
             if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && sender.Name.Contains("End"))
             {
+                Game.PrintChat(sender.Name);
                 Game.PrintChat("Gragas Q has exploded!");
                 QObject = null;
                 QObjectCreateTime = 0f;
