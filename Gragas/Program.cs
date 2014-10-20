@@ -277,7 +277,7 @@ namespace Gragas
                 Console.WriteLine("R Spell Damage: " + Player.GetSpellDamage(target, SpellSlot.R));
                 Console.WriteLine("Target Health: " + target.Health);
                 //Game.PrintChat("R is Ready.");
-                if (Player.GetSpellDamage(target, SpellSlot.R) > target.Health)
+                if (ObjectManager.Player.GetSpellDamage(target, SpellSlot.R) > target.Health)
                 {
                     R.Cast(target, true);
                 }
