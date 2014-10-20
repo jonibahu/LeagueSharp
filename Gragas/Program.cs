@@ -123,28 +123,26 @@ namespace Gragas
             Console.WriteLine("harass");
             var useQ = Config.Item("UseQHarass").GetValue<bool>();
 
-            var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
-            if (qTarget == null)
+            if (target == null)
             {
                 return;
             }
             else
             {
-                Console.WriteLine("qtarget is valid...");
                 if (QObject != null)
                 {
                     Console.WriteLine(QObject.Position.ToString());
-                    if ((Game.Time - QObjectMaxDamageTime) >= 0 && (qTarget.Distance(QObject.Position) < (Q.Width / 2)))
+                    if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
                     {
                         Q.Cast();
-                        Game.PrintChat("casting to hit one");
                     }
                 }
-                if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
+                if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
                 {
-                    SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
+                    SharpDX.Vector3 predPos = Q.GetPrediction(target).CastPosition;
                     if (QObject == null)
                     {
                         Q.Cast(predPos);
@@ -245,31 +243,27 @@ namespace Gragas
             var useE = Config.Item("UseECombo").GetValue<bool>();
             var useR = Config.Item("UseRCombo").GetValue<bool>();
 
-            var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-            var eTarget = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
-            var rTarget = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
+            var target = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
 
-            if (qTarget == null)
+            if (target == null)
             {
                 return;
             }
             else
             {
-                Console.WriteLine("qtarget is valid...");
                 if (QObject != null)
                 {
                     Console.WriteLine(QObject.Position.ToString());
-                    if ((Game.Time - QObjectMaxDamageTime) >= 0 && (qTarget.Distance(QObject.Position) < (Q.Width / 2)))
+                    if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
                     {
                         Q.Cast();
-                        Game.PrintChat("casting to hit one");
                     }
                 }
-                if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
+                if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
                 {
-                    SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
+                    SharpDX.Vector3 predPos = Q.GetPrediction(target).CastPosition;
                     if (QObject == null)
                     {
                         Q.Cast(predPos, true);
@@ -279,17 +273,17 @@ namespace Gragas
                 {
                     W.Cast();
                 }
-                if (useE && eTarget.IsValidTarget(E.Range) && E.IsReady())
+                if (useE && target.IsValidTarget(E.Range) && E.IsReady())
                 {
-                    E.Cast(eTarget, true);
+                    E.Cast(target, true);
                 }
                 if (useR && R.IsReady())
                 {
 
                     //Game.PrintChat("R is Ready.");
-                    if (Player.GetSpellDamage(rTarget, SpellSlot.R) > rTarget.Health)
+                    if (Player.GetSpellDamage(target, SpellSlot.R) > target.Health)
                     {
-                        R.Cast(rTarget, true);
+                        R.Cast(target, true);
                     }
                 }
             }
