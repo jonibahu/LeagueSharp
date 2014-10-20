@@ -110,7 +110,6 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            Console.WriteLine(CanUseQLaunch.ToString());
         }
 
         private static void Harass()
