@@ -216,7 +216,8 @@ namespace Gragas
             var eTarget = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
             var rTarget = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
 
-
+            var damage = Damage.CalcDamage(ObjectManager.Player, qTarget, Damage.DamageType.Magical, qTarget.Health);
+            Console.WriteLine("Q Damage Pred: " + damage);
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
 
