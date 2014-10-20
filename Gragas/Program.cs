@@ -129,6 +129,7 @@ namespace Gragas
                 if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
                 {
                     Q.Cast();
+                    Console.WriteLine("QcastChampinWidth");
                 }
             }
             if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
@@ -136,7 +137,8 @@ namespace Gragas
                 SharpDX.Vector3 predPos = Q.GetPrediction(target).CastPosition;
                 if (QObject == null)
                 {
-                    Q.Cast(predPos);
+                    Q.Cast(predPos, true);
+                    Console.WriteLine("QcastInitial");
                 }
 
 
@@ -255,6 +257,7 @@ namespace Gragas
                 if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
                 {
                     Q.Cast();
+                    Console.WriteLine("QcastChampinWidth");
                 }
             }
             if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
@@ -262,6 +265,8 @@ namespace Gragas
                 if (QObject == null)
                 {
                     Q.Cast(target, true);
+                    Console.WriteLine("QcastInitial");
+
                 }
             }
             if (useW && W.IsReady())
