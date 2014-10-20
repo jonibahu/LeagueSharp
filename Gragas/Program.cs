@@ -121,11 +121,10 @@ namespace Gragas
             if (QObject != null)
                     {
 
-                        if ((Game.Time - QObjectMaxDamageTime) >= 0)
+                        if ((Game.Time - QObjectMaxDamageTime) >= 0 && (qTarget.Distance(QObject.Position) < (Q.Width / 2)))
                         {
-                            Q.CastIfWillHit(qTarget, 1);
+                            Q.Cast();
                         }
-                        Q.CastIfWillHit(qTarget, 3);
                     }
             if (qTarget == null)
             {
@@ -259,20 +258,18 @@ namespace Gragas
                 if (QObject != null)
                 {
                     Console.WriteLine(QObject.Position.ToString());
-                    if ((Game.Time - QObjectMaxDamageTime) >= 0)
+                    if ((Game.Time - QObjectMaxDamageTime) >= 0 && (qTarget.Distance(QObject.Position) < (Q.Width / 2)))
                     {
-                        Q.CastIfWillHit(qTarget, 1);
+                        Q.Cast();
                         Game.PrintChat("casting to hit one");
                     }
-                    Q.CastIfWillHit(qTarget, 3);
-                    Game.PrintChat("casting to hit multiple");
                 }
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
                     if (QObject == null)
                     {
-                        Q.Cast(predPos);
+                        Q.Cast(predPos, true);
                     }
                 }
                 if (useW && W.IsReady())
@@ -287,11 +284,9 @@ namespace Gragas
                 {
 
                     //Game.PrintChat("R is Ready.");
-                    if (Damage.IsKillable(ObjectManager.Player, rTarget, new[] { Tuple.Create<SpellSlot, int>(SpellSlot.R, 1) }))
+                    if (Player.GetSpellDamage(rTarget, SpellSlot.R) > rTarget.Health)
                     {
-                        PredictionOutput prediction;
-                        prediction = R.GetPrediction(rTarget, true);
-                        R.Cast(prediction.CastPosition);
+                        R.Cast(rTarget, true);
                     }
                 }
             }
