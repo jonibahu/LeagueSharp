@@ -109,7 +109,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            //Console.WriteLine(gragQStatus());
+            Console.WriteLine(QprojectileOut.ToString());
         }
 
         private static void Harass()
