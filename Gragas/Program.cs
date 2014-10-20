@@ -110,6 +110,12 @@ namespace Gragas
             }
             Console.WriteLine(Game.Time - QObjectMaxDamageTime);
             Console.WriteLine(QObject.ToString());
+            Console.WriteLine(QObject.Position.ToString());
+            if ((Game.Time - QObjectMaxDamageTime) >= 0)
+            {
+                Q.Cast();
+                Game.PrintChat("casting to hit one");
+            }
         }
 
         private static void Harass()
