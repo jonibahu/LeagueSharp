@@ -72,6 +72,7 @@ namespace Gragas
             Game.OnGameUpdate += Game_OnGameUpdate;
             Orbwalking.AfterAttack += Orbwalking_AfterAttack;
             Orbwalking.BeforeAttack += Orbwalking_BeforeAttack;
+            GameObject.OnCreate += OnCreateObject;
             Config.AddToMainMenu();
             Game.PrintChat("'Roll Out The Barrel' Loaded!");
 
@@ -198,6 +199,11 @@ namespace Gragas
                     E.Cast(bLocation.Position.To3D());
                 }
             }
+        }
+
+        private static void OnCreateObject(GameObject sender, EventArgs args)
+        {
+            Game.PrintChat(sender.Name);
         }
 
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
