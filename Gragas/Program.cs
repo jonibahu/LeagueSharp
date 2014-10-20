@@ -108,14 +108,6 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            Console.WriteLine(Game.Time - QObjectMaxDamageTime);
-            Console.WriteLine(QObject.ToString());
-            Console.WriteLine(QObject.Position.ToString());
-            if ((Game.Time - QObjectMaxDamageTime) >= 0)
-            {
-                Q.Cast();
-                Game.PrintChat("casting to hit one");
-            }
         }
 
         private static void Harass()
@@ -132,6 +124,7 @@ namespace Gragas
             }
             else
             {
+                Console.WriteLine(QObject.ToString());
                 if (QObject != null)
                 {
                     Console.WriteLine(QObject.Position.ToString());
