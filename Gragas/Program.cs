@@ -245,6 +245,15 @@ namespace Gragas
             }
             else
             {
+                if (QObject != null)
+                {
+                    Console.WriteLine(QObject.Position.ToString());
+                    if (Game.Time >= QObjectMaxDamageTime)
+                    {
+                        Q.CastIfWillHit(qTarget, 1);
+                    }
+                    Q.CastIfWillHit(qTarget, 3);
+                }
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
@@ -252,16 +261,6 @@ namespace Gragas
                     {
                         Q.Cast(predPos);
                     }
-                    if (QObject != null)
-                    {
-                        Console.WriteLine(QObject.Position.ToString());
-                        if (Game.Time >= QObjectMaxDamageTime)
-                        {
-                            Q.CastIfWillHit(qTarget, 1);
-                        }
-                        Q.CastIfWillHit(qTarget, 3);
-                    }
-
                 }
                 if (useW && W.IsReady())
                 {
