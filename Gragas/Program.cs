@@ -77,6 +77,7 @@ namespace Gragas
             Orbwalking.AfterAttack += Orbwalking_AfterAttack;
             Orbwalking.BeforeAttack += Orbwalking_BeforeAttack;
             GameObject.OnCreate += OnCreateObject;
+            GameObject.OnDelete += OnDeleteObject;
             Config.AddToMainMenu();
             Game.PrintChat("'Roll Out The Barrel' Loaded!");
 
