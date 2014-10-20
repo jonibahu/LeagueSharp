@@ -223,6 +223,10 @@ namespace Gragas
                 QObjectMaxDamageTime = QObjectCreateTime + 2;
                 CanUseQLaunch = false;
             }
+            if (sender.Name.Contains("barrelfoam"))
+            {
+                Game.PrintChat(Color.BurlyWood + "barrel");
+            }
 
         }
         private static void OnDeleteObject(GameObject sender, EventArgs args)
