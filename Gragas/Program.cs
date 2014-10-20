@@ -13,7 +13,7 @@ namespace Gragas
     {
         public const string ChampionName = "Gragas";
         public static Orbwalking.Orbwalker Orbwalker;
-        public static Spell Q, W, E, R;
+        public static Spell Q, Q2, W, E, R;
         public static Menu Config;
         private static Obj_AI_Hero Player;
         private static GameObject QObject = null;
@@ -33,6 +33,8 @@ namespace Gragas
 
             Q = new Spell(SpellSlot.Q, 1100);
             Q.SetSkillshot(-0.5f, 110f, 1000f, false, SkillshotType.SkillshotCircle);
+
+            Q2 = new Spell(SpellSlot.Q, 250);
 
             W = new Spell(SpellSlot.W, 0);
 
@@ -95,6 +97,7 @@ namespace Gragas
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
+            Player = ObjectManager.Player;
             if (Program.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
             {
                 //Game.PrintChat("combo");
@@ -117,33 +120,7 @@ namespace Gragas
             var useQ = Config.Item("UseQHarass").GetValue<bool>();
 
             var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-            //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
-            //Game.PrintChat(damage.ToString());
-            if (target == null)
-            {
-                return;
-            }
-            Console.WriteLine(QObject.ToString());
-            if (QObject != null)
-            {
-                Console.WriteLine(QObject.Position.ToString());
-                if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
-                {
-                    Q.Cast();
-                    Console.WriteLine("QcastChampinWidth");
-                }
-            }
-            if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
-            {
-                SharpDX.Vector3 predPos = Q.GetPrediction(target).CastPosition;
-                if (QObject == null && CanUseQLaunch)
-                {
-                    Q.Cast(predPos, true);
-                    Console.WriteLine("QcastInitial");
-                }
-
-
-            }
+            
         }
 
         private static string gragQStatus()
@@ -223,10 +200,6 @@ namespace Gragas
                 QObjectMaxDamageTime = QObjectCreateTime + 2;
                 CanUseQLaunch = false;
             }
-            if (sender.Name.Contains("barrelfoam"))
-            {
-                Game.PrintChat(Color.BurlyWood + "barrel");
-            }
 
         }
         private static void OnDeleteObject(GameObject sender, EventArgs args)
@@ -252,61 +225,63 @@ namespace Gragas
             var useR = Config.Item("UseRCombo").GetValue<bool>();
 
             var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-            //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
-            //Game.PrintChat(damage.ToString());
 
-            if (target == null)
-            {
-                return;
-            }
-            if (QObject != null)
-            {
-                if ((Game.Time - QObjectMaxDamageTime) >= 0 && (target.Distance(QObject.Position) < (Q.Width / 2)))
-                {
-                    Q.Cast();
-                    Console.WriteLine("QcastChampinWidth");
-                }
-            }
-            if (useQ && target.IsValidTarget(Q.Range) && Q.IsReady())
-            {
-                if (QObject == null && CanUseQLaunch)
-                {
-                    Q.Cast(target, true);
-                    Console.WriteLine("QcastInitial");
 
-                }
-            }
-            if (useW && W.IsReady())
+            if (useQ) { ComboQ(target); ComboQ2(target); }
+            if (useW) { ComboW(target); }
+            if (useE) { ComboE(target); }
+            if (useR) { ComboR(target); }
+        }
+
+        private static void ComboQ(Obj_AI_Hero target)
+        {
+            if (Q.IsReady() && QObject == null)
             {
-                W.Cast();
-            }
-            if (useE && target.IsValidTarget(E.Range) && E.IsReady())
-            {
-                E.Cast(target, true);
-            }
-            if (useR && R.IsReady())
-            {
-                Console.WriteLine("R Spell Damage: " + Player.GetSpellDamage(target, SpellSlot.R));
-                Console.WriteLine("Target Health: " + target.Health);
-                //Game.PrintChat("R is Ready.");
-                if (ObjectManager.Player.GetSpellDamage(target, SpellSlot.R) > target.Health)
+                PredictionOutput pred = Prediction.GetPrediction(target, Q.Delay, Q.Width / 2, Q.Speed);
+                if (pred.Hitchance == HitChance.Medium)
                 {
-                    R.Cast(target, true);
+                    Q.Cast(pred.CastPosition, true);
                 }
             }
         }
-
-        private static float getRemainingBarrelRoll()
+        private static void ComboQ2(Obj_AI_Hero target)
         {
-            foreach (var buff in ObjectManager.Player.Buffs)
+            if (QObject != null)
             {
-                if (buff.Name == "GragasQ")
+                if (target.Distance(QObject.Position) < Q2.Range)
                 {
-                    //Game.PrintChat("Remaining Barrel Roll Time: " + (buff.EndTime - Game.Time).ToString());
-                    return buff.EndTime - Game.Time;
+                    Q.Cast();
                 }
             }
-            return 0;
+        }
+        private static void ComboW(Obj_AI_Hero target)
+        {
+            if (W.IsReady() && Player.Distance(target) < 250)
+            {
+                W.Cast();
+            }
+        }
+        private static void ComboE(Obj_AI_Hero target)
+        {
+            if (E.IsReady())
+            {
+                PredictionOutput pred = Prediction.GetPrediction(target, E.Delay, E.Width / 2, E.Speed);
+                if (pred.CollisionObjects.Count < 1)
+                {
+                    E.Cast(pred.CastPosition, true);
+                }
+            }
+        }
+        private static void ComboR(Obj_AI_Hero target)
+        {
+            if (R.IsReady() && R.IsKillable(target))
+            {
+                PredictionOutput pred = Prediction.GetPrediction(target, R.Delay, R.Width / 2, R.Speed);
+                if (pred.Hitchance == HitChance.High)
+                {
+                    R.Cast(pred.CastPosition, true);
+                }
+            }
         }
     }
 }
