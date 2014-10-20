@@ -201,7 +201,7 @@ namespace Gragas
 
         private static void OnCreateObject(GameObject sender, EventArgs args)
         {
-            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q"))
+            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q") && !sender.Name.Contains("End"))
             {
                 Game.PrintChat("Gragas Q is out!");
                 QObject = sender;
