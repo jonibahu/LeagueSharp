@@ -240,7 +240,7 @@ namespace Gragas
                 PredictionOutput pred = Prediction.GetPrediction(target, Q.Delay, Q.Width / 2, Q.Speed);
                 if (pred.Hitchance == HitChance.Medium)
                 {
-                    Q.Cast(pred.CastPosition, true);
+                    Q.Cast(pred.CastPosition);
                 }
             }
         }
@@ -268,7 +268,7 @@ namespace Gragas
                 PredictionOutput pred = Prediction.GetPrediction(target, E.Delay, E.Width / 2, E.Speed);
                 if (E.WillHit(target, pred.CastPosition))
                 {
-                    E.Cast(pred.CastPosition, true);
+                    E.Cast(pred.CastPosition);
                 }
             }
         }
@@ -278,7 +278,7 @@ namespace Gragas
             if (R.IsReady() && target.IsValidTarget(E.Range) && R.IsKillable(target))
             {
                 PredictionOutput pred = Prediction.GetPrediction(target, R.Delay, R.Width / 2, R.Speed);
-                R.Cast(pred.CastPosition, true);
+                R.Cast(pred.CastPosition);
             }
         }
     }
