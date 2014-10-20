@@ -118,13 +118,30 @@ namespace Gragas
             var qTarget = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             //double damage = ObjectManager.Player.GetSpellDamage(target, SpellSlot.R, 1);
             //Game.PrintChat(damage.ToString());
+            if (QObject != null)
+                    {
 
+                        if ((Game.Time - QObjectMaxDamageTime) >= 0)
+                        {
+                            Q.CastIfWillHit(qTarget, 1);
+                        }
+                        Q.CastIfWillHit(qTarget, 3);
+                    }
             if (qTarget == null)
             {
                 return;
             }
             else
             {
+                if (QObject != null)
+                {
+
+                    if ((Game.Time - QObjectMaxDamageTime) >= 0)
+                    {
+                        Q.CastIfWillHit(qTarget, 1);
+                    }
+                    Q.CastIfWillHit(qTarget, 3);
+                }
                 if (useQ && qTarget.IsValidTarget(Q.Range) && Q.IsReady())
                 {
                     SharpDX.Vector3 predPos = Q.GetPrediction(qTarget).CastPosition;
@@ -132,15 +149,7 @@ namespace Gragas
                     {
                         Q.Cast(predPos);
                     }
-                    if (QObject != null)
-                    {
-
-                        if (Game.Time >= QObjectMaxDamageTime)
-                        {
-                            Q.CastIfWillHit(qTarget, 1);
-                        }
-                        Q.CastIfWillHit(qTarget, 3);
-                    }
+                    
 
                 }
             }
@@ -246,10 +255,11 @@ namespace Gragas
             }
             else
             {
+                Console.WriteLine("qtarget is valid...");
                 if (QObject != null)
                 {
                     Console.WriteLine(QObject.Position.ToString());
-                    if (Game.Time >= QObjectMaxDamageTime)
+                    if ((Game.Time - QObjectMaxDamageTime) >= 0)
                     {
                         Q.CastIfWillHit(qTarget, 1);
                         Game.PrintChat("casting to hit one");
