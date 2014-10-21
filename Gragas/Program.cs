@@ -169,14 +169,13 @@ namespace Gragas
             var useQ = Config.Item("UseQLaneClear").GetValue<bool>();
             var useW = Config.Item("UseWLaneClear").GetValue<bool>();
             var useE = Config.Item("UseELaneClear").GetValue<bool>();
-            var useR = Config.Item("UseRLaneClear").GetValue<bool>();
 
-            List<Obj_AI_Base> rangedMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range,
+            var rangedMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range,
                 MinionTypes.Ranged);
-            List<Obj_AI_Base> allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
+            var allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
 
-            List<Obj_AI_Base> jungleMinions = MinionManager.GetMinions(ObjectManager.Player.Position, Q.Range,
-                MinionTypes.All, MinionTeam.NotAlly);
+            var jungleMinions = MinionManager.GetMinions(ObjectManager.Player.Position, Q.Range,
+                MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
 
             allMinions.AddRange(jungleMinions);
             MinionManager.FarmLocation rangedLocation;
@@ -184,7 +183,7 @@ namespace Gragas
             MinionManager.FarmLocation bLocation;
             if (useQ && Q.IsReady())
             {
-                bool barrelRoll = _player.HasBuff("GragasQ");
+                var barrelRoll = _player.HasBuff("GragasQ");
                 rangedLocation = Q.GetCircularFarmLocation(rangedMinions);
                 location = Q.GetCircularFarmLocation(allMinions);
                 bLocation = (location.MinionsHit > rangedLocation.MinionsHit + 1)
@@ -197,7 +196,7 @@ namespace Gragas
                 }
                 if (barrelRoll)
                 {
-                    int minionsHit =
+                    var minionsHit =
                         allMinions.Count(
                             minion =>
                                 Vector3.Distance(bLocation.Position.To3D(), minion.ServerPosition) <= Q.Width &&
@@ -208,15 +207,21 @@ namespace Gragas
                     }
                 }
             }
-            if (!useE || !E.IsReady()) return;
-            rangedLocation = Q.GetCircularFarmLocation(rangedMinions);
-            location = Q.GetCircularFarmLocation(allMinions);
-            bLocation = (location.MinionsHit > rangedLocation.MinionsHit + 1)
-                ? location
-                : rangedLocation;
-            if (bLocation.MinionsHit > 2)
+            if (useE && E.IsReady())
             {
-                E.Cast(bLocation.Position.To3D());
+                rangedLocation = Q.GetCircularFarmLocation(rangedMinions);
+                location = Q.GetCircularFarmLocation(allMinions);
+                bLocation = (location.MinionsHit > rangedLocation.MinionsHit + 1)
+                    ? location
+                    : rangedLocation;
+                if (bLocation.MinionsHit > 2)
+                {
+                    E.Cast(bLocation.Position.To3D());
+                }
+            }
+            if (useW && W.IsReady())
+            {
+                W.Cast();
             }
         }
 
