@@ -231,20 +231,42 @@ namespace Gragas
 
             if (useQ)
             {
-                ComboQ();
-                ComboQ2();
+                var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+                //Console.WriteLine(t.ToString());
+                if (!Q.IsReady() || _qObject != null || !t.IsValidTarget(Q.Range)) return;
+                Q.Cast(t, false, true);
+                _qObject = new GameObject();
+                if (_qObject == null) return;
+                if (t.Distance(_qObject.Position) < Q2.Range)
+                {
+                    Q.Cast();
+                }
             }
             if (useW)
             {
-                ComboW();
+                var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
+                //Console.WriteLine(t.ToString()); 
+                if (W.IsReady() && _player.Distance(t) < 250)
+                {
+                    W.Cast();
+                }
             }
             if (useE)
             {
-                ComboE();
+                var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
+                //Console.WriteLine(t.ToString()); 
+                if (!E.IsReady() || !t.IsValidTarget(E.Range)) return;
+                //var pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
+                E.Cast(t, false, true);
             }
             if (useR)
             {
-                ComboR();
+                var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
+                Game.PrintChat(R.GetDamage(t, 1).ToString(CultureInfo.InvariantCulture));
+                //Console.WriteLine(t.ToString()); 
+                if (!R.IsReady() || !t.IsValidTarget(R.Range) || !R.IsKillable(t)) return;
+                //var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
+                R.Cast(t, false, true);
             }
         }
 
