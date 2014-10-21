@@ -122,7 +122,14 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            
+            if (_qObject != null)
+            {
+                Game.PrintChat("Can Cast Q2");
+            }
+            else
+            {
+                Game.PrintChat("Can Launch Q");
+            }
         }
 
         private static void Harass()
