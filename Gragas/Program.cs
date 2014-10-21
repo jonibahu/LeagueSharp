@@ -121,7 +121,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            Game.PrintChat(R.GetDamage(_player).ToString(CultureInfo.InvariantCulture));
+            Game.PrintChat(R.GetDamage(_player, 1).ToString(CultureInfo.InvariantCulture));
         }
 
         private static void Harass()
