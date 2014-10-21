@@ -128,7 +128,28 @@ namespace Gragas
         {
             var useQ = Config.Item("UseQHarass").GetValue<bool>();
 
-            Obj_AI_Hero target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            if (useQ)
+            {
+                var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+                //Console.WriteLine(t.ToString());
+                if (Q.IsReady() && _qObject == null && t.IsValidTarget(Q.Range))
+                {
+                    Q.Cast(t, false, true);
+                    _qObject = new GameObject();
+
+                }
+                if (_qObject != null && _qObject.IsValid)
+                {
+                    if ((Game.Time - QObjectMaxDamageTime) >= 0)
+                    {
+                        if (t.Distance(_qObject.Position) < Q2.Range)
+                        {
+                            Q.Cast();
+                            _qObject = null;
+                        }
+                    }
+                }
+            }
         }
 
 /*
