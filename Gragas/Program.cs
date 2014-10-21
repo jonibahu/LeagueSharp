@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using LeagueSharp;
 using LeagueSharp.Common;
@@ -120,6 +121,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
+            Game.PrintChat(R.GetDamage(_player).ToString(CultureInfo.InvariantCulture));
         }
 
         private static void Harass()
