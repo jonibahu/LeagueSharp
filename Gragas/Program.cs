@@ -252,6 +252,26 @@ namespace Gragas
             var useE = Config.Item("UseECombo").GetValue<bool>();
             var useR = Config.Item("UseRCombo").GetValue<bool>();
 
+            if (useW)
+            {
+                var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
+                //Console.WriteLine(t.ToString()); 
+                if (W.IsReady())
+                {
+                    W.Cast();
+                }
+            }
+            if (useE)
+            {
+                var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
+                //Console.WriteLine(t.ToString()); 
+                if (E.IsReady() && t.IsValidTarget(E.Range))
+                {
+                    var pred = Prediction.GetPrediction(t, E.Delay, E.Width / 2, E.Speed);
+                    E.Cast(pred.CastPosition);
+                }
+                //
+            }
             if (useQ)
             {
                 var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
@@ -274,26 +294,8 @@ namespace Gragas
                     }
                 }
             }
-            if (useW)
-            {
-                var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
-                //Console.WriteLine(t.ToString()); 
-                if (W.IsReady())
-                {
-                    W.Cast();
-                }
-            }
-            if (useE)
-            {
-                var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
-                //Console.WriteLine(t.ToString()); 
-                if (E.IsReady() && t.IsValidTarget(E.Range))
-                {
-                    var pred = Prediction.GetPrediction(t, E.Delay, E.Width / 2, E.Speed);
-                    E.Cast(pred.CastPosition);
-                }
-                //
-            }
+            
+            
             if (useR)
             {
                 var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
