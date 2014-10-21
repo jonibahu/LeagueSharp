@@ -260,7 +260,7 @@ namespace Gragas
         private static void ComboQ2()
         {
             var t = SimpleTs.GetTarget(Q2.Range, SimpleTs.DamageType.Magical);
-            //Console.WriteLine(t.ToString()); if (_qObject == null) return;
+            if (_qObject == null) return;
             if (t.Distance(_qObject.Position) < Q2.Range)
             {
                 Q.Cast();
