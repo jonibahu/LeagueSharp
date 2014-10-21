@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LeagueSharp;
 using LeagueSharp.Common;
@@ -125,7 +126,7 @@ namespace Gragas
         {
             var useQ = Config.Item("UseQHarass").GetValue<bool>();
 
-            var target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            Obj_AI_Hero target = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
         }
 
 /*
@@ -146,11 +147,11 @@ namespace Gragas
             var useE = Config.Item("UseELaneClear").GetValue<bool>();
             var useR = Config.Item("UseRLaneClear").GetValue<bool>();
 
-            var rangedMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range,
+            List<Obj_AI_Base> rangedMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range,
                 MinionTypes.Ranged);
-            var allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
+            List<Obj_AI_Base> allMinions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, Q.Range);
 
-            var jungleMinions = MinionManager.GetMinions(ObjectManager.Player.Position, Q.Range,
+            List<Obj_AI_Base> jungleMinions = MinionManager.GetMinions(ObjectManager.Player.Position, Q.Range,
                 MinionTypes.All, MinionTeam.NotAlly);
 
             allMinions.AddRange(jungleMinions);
@@ -159,7 +160,7 @@ namespace Gragas
             MinionManager.FarmLocation bLocation;
             if (useQ && Q.IsReady())
             {
-                var barrelRoll = _player.HasBuff("GragasQ");
+                bool barrelRoll = _player.HasBuff("GragasQ");
                 rangedLocation = Q.GetCircularFarmLocation(rangedMinions);
                 location = Q.GetCircularFarmLocation(allMinions);
                 bLocation = (location.MinionsHit > rangedLocation.MinionsHit + 1)
@@ -172,7 +173,11 @@ namespace Gragas
                 }
                 if (barrelRoll)
                 {
-                    var minionsHit = allMinions.Count(minion => Vector3.Distance(bLocation.Position.To3D(), minion.ServerPosition) <= Q.Width && Q.GetDamage(minion) > minion.Health);
+                    int minionsHit =
+                        allMinions.Count(
+                            minion =>
+                                Vector3.Distance(bLocation.Position.To3D(), minion.ServerPosition) <= Q.Width &&
+                                Q.GetDamage(minion) > minion.Health);
                     if (minionsHit >= 3)
                     {
                         Q.Cast();
@@ -247,7 +252,7 @@ namespace Gragas
 
         private static void ComboQ()
         {
-            var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            Obj_AI_Hero t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             if (Q.IsReady() && _qObject == null && t.IsValidTarget(Q.Range))
             {
                 PredictionOutput pred = Prediction.GetPrediction(t, Q.Delay, Q.Width/2, Q.Speed);
