@@ -307,6 +307,13 @@ namespace Gragas
                             var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
                             R.Cast(pred.CastPosition);
                         }
+                        else
+                        {
+                            if (Q.IsKillable(t))
+                            {
+                                Q.Cast();
+                            }
+                        }
                     }
                 }
                 //var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
