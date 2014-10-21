@@ -198,25 +198,21 @@ namespace Gragas
 
         private static void OnCreateObject(GameObject sender, EventArgs args)
         {
-            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q_Ally"))
-            {
-                Game.PrintChat(sender.Name);
-                Game.PrintChat("Gragas Q is out!");
-                _qObject = sender;
-                _qObjectCreateTime = Game.Time;
-                QObjectMaxDamageTime = _qObjectCreateTime + 2;
-                CanUseQLaunch = false;
-            }
+            if (!sender.Name.Contains("Gragas") || !sender.Name.Contains("Q_Ally")) return;
+            Game.PrintChat(sender.Name);
+            Game.PrintChat("Gragas Q is out!");
+            _qObject = sender;
+            _qObjectCreateTime = Game.Time;
+            QObjectMaxDamageTime = _qObjectCreateTime + 2;
+            CanUseQLaunch = false;
         }
 
         private static void OnDeleteObject(GameObject sender, EventArgs args)
         {
-            if (sender.Name.Contains("Gragas") && sender.Name.Contains("Q_Ally"))
-            {
-                Game.PrintChat(sender.Name);
-                Game.PrintChat("Gragas Q exploded!");
-                CanUseQLaunch = true;
-            }
+            if (!sender.Name.Contains("Gragas") || !sender.Name.Contains("Q_Ally")) return;
+            Game.PrintChat(sender.Name);
+            Game.PrintChat("Gragas Q exploded!");
+            CanUseQLaunch = true;
         }
 
         private static void OnEnemyGapcloser(ActiveGapcloser gapcloser)
@@ -252,23 +248,19 @@ namespace Gragas
 
         private static void ComboQ()
         {
-            Obj_AI_Hero t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-            if (Q.IsReady() && _qObject == null && t.IsValidTarget(Q.Range))
-            {
-                PredictionOutput pred = Prediction.GetPrediction(t, Q.Delay, Q.Width/2, Q.Speed);
-                Q.Cast(pred.CastPosition);
-            }
+            var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
+            if (!Q.IsReady() || _qObject != null || !t.IsValidTarget(Q.Range)) return;
+            var pred = Prediction.GetPrediction(t, Q.Delay, Q.Width/2, Q.Speed);
+            Q.Cast(pred.CastPosition);
         }
 
         private static void ComboQ2()
         {
             var t = SimpleTs.GetTarget(Q2.Range, SimpleTs.DamageType.Magical);
-            if (_qObject != null)
+            if (_qObject == null) return;
+            if (t.Distance(_qObject.Position) < Q2.Range)
             {
-                if (t.Distance(_qObject.Position) < Q2.Range)
-                {
-                    Q.Cast();
-                }
+                Q.Cast();
             }
         }
 
@@ -284,22 +276,18 @@ namespace Gragas
         private static void ComboE()
         {
             var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
-            if (E.IsReady() && t.IsValidTarget(E.Range))
-            {
-                PredictionOutput pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
-                E.Cast(pred.CastPosition);
-            }
+            if (!E.IsReady() || !t.IsValidTarget(E.Range)) return;
+            var pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
+            E.Cast(pred.CastPosition);
         }
 
         private static void ComboR()
         {
             var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
             Game.PrintChat("R Killable: " + R.IsKillable(t));
-            if (R.IsReady() && t.IsValidTarget(R.Range) && R.IsKillable(t))
-            {
-                PredictionOutput pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
-                R.Cast(pred.CastPosition);
-            }
+            if (!R.IsReady() || !t.IsValidTarget(R.Range) || !R.IsKillable(t)) return;
+            var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
+            R.Cast(pred.CastPosition);
         }
     }
 }
