@@ -249,7 +249,7 @@ namespace Gragas
         private static void ComboQ()
         {
             var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
-            Game.PrintChat(t.ToString());
+            Console.WriteLine(t.ToString());
             if (!Q.IsReady() || _qObject != null || !t.IsValidTarget(Q.Range)) return;
             var pred = Prediction.GetPrediction(t, Q.Delay, Q.Width/2, Q.Speed);
             Q.Cast(pred.CastPosition);
@@ -258,8 +258,7 @@ namespace Gragas
         private static void ComboQ2()
         {
             var t = SimpleTs.GetTarget(Q2.Range, SimpleTs.DamageType.Magical);
-            Game.PrintChat(t.ToString());
-            if (_qObject == null) return;
+            Console.WriteLine(t.ToString()); if (_qObject == null) return;
             if (t.Distance(_qObject.Position) < Q2.Range)
             {
                 Q.Cast();
@@ -269,7 +268,7 @@ namespace Gragas
         private static void ComboW()
         {
             var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
-            Game.PrintChat(t.ToString());
+            Console.WriteLine(t.ToString()); 
             if (W.IsReady() && _player.Distance(t) < 250)
             {
                 W.Cast();
@@ -279,7 +278,7 @@ namespace Gragas
         private static void ComboE()
         {
             var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
-            Game.PrintChat(t.ToString());
+            Console.WriteLine(t.ToString()); 
             if (!E.IsReady() || !t.IsValidTarget(E.Range)) return;
             var pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
             E.Cast(pred.CastPosition);
@@ -288,7 +287,7 @@ namespace Gragas
         private static void ComboR()
         {
             var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
-            Game.PrintChat(t.ToString());
+            Console.WriteLine(t.ToString()); 
             if (!R.IsReady() || !t.IsValidTarget(R.Range) || !R.IsKillable(t)) return;
             var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
             R.Cast(pred.CastPosition);
