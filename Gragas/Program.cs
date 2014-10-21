@@ -275,8 +275,11 @@ namespace Gragas
                 //Console.WriteLine(t.ToString()); 
                 if (R.IsReady() && t.IsValidTarget(R.Range))
                 {
-                    var pred = Prediction.GetPrediction(t, R.Delay, R.Width / 2, R.Speed);
-                    R.Cast(pred.CastPosition);
+                    if (R.IsKillable(t))
+                    {
+                        var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
+                        R.Cast(pred.CastPosition);
+                    }
                 }
                 //var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
             }
@@ -317,9 +320,11 @@ namespace Gragas
         {
             var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
             //Console.WriteLine(t.ToString()); 
-            if (!E.IsReady() || !t.IsValidTarget(E.Range)) return;
+            if (E.IsReady() && t.IsValidTarget(E.Range))
+            {
+                E.Cast(t, false, true);
+            }
             //var pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
-            E.Cast(t, false, true);
         }
 
         private static void ComboR()
@@ -327,9 +332,11 @@ namespace Gragas
             var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
             Game.PrintChat(R.GetDamage(t, 1).ToString(CultureInfo.InvariantCulture));
             //Console.WriteLine(t.ToString()); 
-            if (!R.IsReady() || !t.IsValidTarget(R.Range) || !R.IsKillable(t)) return;
+            if (R.IsReady() && t.IsValidTarget(R.Range) && R.IsKillable(t))
+            {
+                R.Cast(t, false, true);
+            }
             //var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
-            R.Cast(t, false, true);
         }
     }
 }
