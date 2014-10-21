@@ -242,10 +242,13 @@ namespace Gragas
                 }
                 if (_qObject != null)
                 {
-                    if (t.Distance(_qObject.Position) < Q2.Range)
+                    if ((Game.Time - QObjectMaxDamageTime) >= 0)
                     {
-                        Q.Cast();
-                        _qObject = null;
+                        if (t.Distance(_qObject.Position) < Q2.Range)
+                        {
+                            Q.Cast();
+                            _qObject = null;
+                        }
                     }
                 }
             }
