@@ -245,6 +245,7 @@ namespace Gragas
                     if (t.Distance(_qObject.Position) < Q2.Range)
                     {
                         Q.Cast();
+                        _qObject = null;
                     }
                 }
             }
