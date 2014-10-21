@@ -253,8 +253,9 @@ namespace Gragas
             var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             //Console.WriteLine(t.ToString());
             if (!Q.IsReady() || _qObject != null || !t.IsValidTarget(Q.Range)) return;
-            Q.Cast(t, true, true);
+            Q.Cast(t, false, true);
             _qObject = new GameObject();
+
         }
 
         private static void ComboQ2()
@@ -282,8 +283,8 @@ namespace Gragas
             var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
             //Console.WriteLine(t.ToString()); 
             if (!E.IsReady() || !t.IsValidTarget(E.Range)) return;
-            var pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
-            E.Cast(pred.CastPosition);
+            //var pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
+            E.Cast(t, false, true);
         }
 
         private static void ComboR()
@@ -292,8 +293,8 @@ namespace Gragas
             Game.PrintChat(R.GetDamage(t, 1).ToString(CultureInfo.InvariantCulture));
             //Console.WriteLine(t.ToString()); 
             if (!R.IsReady() || !t.IsValidTarget(R.Range) || !R.IsKillable(t)) return;
-            var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
-            R.Cast(pred.CastPosition);
+            //var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
+            R.Cast(t, false, true);
         }
     }
 }
