@@ -255,6 +255,7 @@ namespace Gragas
             if (!Q.IsReady() || _qObject != null || !t.IsValidTarget(Q.Range)) return;
             var pred = Prediction.GetPrediction(t, Q.Delay, Q.Width/2, Q.Speed);
             Q.Cast(pred.CastPosition);
+            _qObject = new GameObject();
         }
 
         private static void ComboQ2()
