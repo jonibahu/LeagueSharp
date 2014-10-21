@@ -121,7 +121,7 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
-            Game.PrintChat(R.GetDamage(_player, 1).ToString(CultureInfo.InvariantCulture));
+            
         }
 
         private static void Harass()
@@ -289,6 +289,7 @@ namespace Gragas
         private static void ComboR()
         {
             var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
+            Game.PrintChat(R.GetDamage(t, 1).ToString(CultureInfo.InvariantCulture));
             //Console.WriteLine(t.ToString()); 
             if (!R.IsReady() || !t.IsValidTarget(R.Range) || !R.IsKillable(t)) return;
             var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
