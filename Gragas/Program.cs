@@ -214,6 +214,7 @@ namespace Gragas
             if (!sender.Name.Contains("Gragas") || !sender.Name.Contains("Q_Ally")) return;
             //Game.PrintChat(sender.Name);
             //Game.PrintChat("Gragas Q exploded!");
+            _qObject = null;
             CanUseQLaunch = true;
         }
 
@@ -268,7 +269,6 @@ namespace Gragas
             if (useR)
             {
                 var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
-                Game.PrintChat(R.GetDamage(t, 1).ToString(CultureInfo.InvariantCulture));
                 //Console.WriteLine(t.ToString()); 
                 if (R.IsReady() && t.IsValidTarget(R.Range) && R.IsKillable(t))
                 {
