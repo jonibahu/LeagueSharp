@@ -142,9 +142,10 @@ namespace Gragas
                 //Console.WriteLine(t.ToString());
                 if (Q.IsReady() && _qObject == null && t.IsValidTarget(Q.Range))
                 {
-                    Q.Cast(t, false, true);
-                    _qObject = new GameObject();
-
+                    if (Q.Cast(t, false, true) == Spell.CastStates.SuccessfullyCasted)
+                    {
+                        _qObject = new GameObject();
+                    }
                 }
                 if (_qObject != null && _qObject.IsValid)
                 {
@@ -152,8 +153,10 @@ namespace Gragas
                     {
                         if (t.Distance(_qObject.Position) < Q2.Range)
                         {
-                            Q.Cast();
-                            _qObject = null;
+                            if (Q.Cast())
+                            {
+                                _qObject = null;
+                            }
                         }
                     }
                 }
