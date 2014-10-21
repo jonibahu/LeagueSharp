@@ -277,7 +277,7 @@ namespace Gragas
             {
                 var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Magical);
                 //Console.WriteLine(t.ToString()); 
-                if (W.IsReady() && _player.Distance(t) < 250)
+                if (W.IsReady())
                 {
                     W.Cast();
                 }
