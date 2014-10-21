@@ -238,12 +238,13 @@ namespace Gragas
                 {
                     Q.Cast(t, false, true);
                     _qObject = new GameObject();
-                    if (_qObject != null)
+                    
+                }
+                if (_qObject != null)
+                {
+                    if (t.Distance(_qObject.Position) < Q2.Range)
                     {
-                        if (t.Distance(_qObject.Position) < Q2.Range)
-                        {
-                            Q.Cast();
-                        }
+                        Q.Cast();
                     }
                 }
             }
@@ -262,17 +263,19 @@ namespace Gragas
                 //Console.WriteLine(t.ToString()); 
                 if (E.IsReady() && t.IsValidTarget(E.Range))
                 {
-                    E.Cast(t, false, true);
+                    var pred = Prediction.GetPrediction(t, E.Delay, E.Width / 2, E.Speed);
+                    E.Cast(pred.CastPosition);
                 }
-                //var pred = Prediction.GetPrediction(t, E.Delay, E.Width/2, E.Speed);
+                //
             }
             if (useR)
             {
                 var t = SimpleTs.GetTarget(R.Range, SimpleTs.DamageType.Magical);
                 //Console.WriteLine(t.ToString()); 
-                if (R.IsReady() && t.IsValidTarget(R.Range) && R.IsKillable(t))
+                if (R.IsReady() && t.IsValidTarget(R.Range))
                 {
-                    R.Cast(t, false, true);
+                    var pred = Prediction.GetPrediction(t, R.Delay, R.Width / 2, R.Speed);
+                    R.Cast(pred.CastPosition);
                 }
                 //var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
             }
