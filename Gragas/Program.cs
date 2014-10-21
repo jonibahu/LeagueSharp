@@ -253,8 +253,7 @@ namespace Gragas
             var t = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Magical);
             //Console.WriteLine(t.ToString());
             if (!Q.IsReady() || _qObject != null || !t.IsValidTarget(Q.Range)) return;
-            var pred = Prediction.GetPrediction(t, Q.Delay, Q.Width/2, Q.Speed);
-            Q.Cast(pred.CastPosition);
+            Q.Cast(t, true, true);
             _qObject = new GameObject();
         }
 
