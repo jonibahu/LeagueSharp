@@ -264,7 +264,7 @@ namespace Gragas
             //Console.WriteLine(t.ToString()); if (_qObject == null) return;
             if (t.Distance(_qObject.Position) < Q2.Range)
             {
-                //Q.Cast();
+                Q.Cast();
             }
         }
 
