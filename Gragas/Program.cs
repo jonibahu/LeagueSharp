@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
@@ -301,8 +302,11 @@ namespace Gragas
                 {
                     if (R.IsKillable(t))
                     {
-                        var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
-                        R.Cast(pred.CastPosition);
+                        if (!RKillStealIsTargetInQ(t))
+                        {
+                            var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
+                            R.Cast(pred.CastPosition);
+                        }
                     }
                 }
                 //var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
@@ -361,6 +365,18 @@ namespace Gragas
                 R.Cast(t, false, true);
             }
             //var pred = Prediction.GetPrediction(t, R.Delay, R.Width/2, R.Speed);
+        }
+
+        private static bool RKillStealIsTargetInQ(Obj_AI_Hero target)
+        {
+            if (_qObject != null)
+            {
+                if (target.Distance(_qObject.Position) < Q2.Range/2)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
