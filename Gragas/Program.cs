@@ -122,6 +122,11 @@ namespace Gragas
                 //Game.PrintChat("laneclear");
                 LaneClear();
             }
+            if (Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Harass)
+            {
+                //Game.PrintChat("harass");
+                Harass();
+            }
             //if (_qObject != null)
             //{
             //    Game.PrintChat("Can Cast Q2");
